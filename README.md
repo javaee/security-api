@@ -1,4 +1,4 @@
-# JSR-375 API
+# JSR-375 API Code Repository
 
 Java EE Security (JSR 375) API
 
