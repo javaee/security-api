@@ -1,0 +1,236 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+<!--
+    <groupId>org.glassfish.soteria</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.0-m02-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+     <parent>
+       <groupId>org.glassfish.soteria</groupId>
+       <artifactId>parent</artifactId>
+       <version>1.0-m02-SNAPSHOT</version>
+    </parent>
+-->
+
+    <parent>
+        <groupId>net.java</groupId>
+        <artifactId>jvnet-parent</artifactId>
+        <version>5</version>
+    </parent>
+
+    <inceptionYear>2015</inceptionYear>
+
+    <groupId>javax.security</groupId>
+    <artifactId>javax.security-api</artifactId>
+    <version>1.0-m02-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+
+    <name>Java EE Security upstream API</name>
+
+    <licenses>
+        <license>
+            <name>
+                Dual license consisting of the CDDL v1.1 and GPL v2
+            </name>
+            <url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <api_package>javax.security</api_package>
+        <impl_namespace>org.glassfish.soteria</impl_namespace>
+        <spec_version>1.0</spec_version>
+        <spec_impl_version>1.0-SNAPSHOT</spec_impl_version>
+        <impl_version>1.0-SNAPSHOT</impl_version>
+
+        <packages.export>!javax.security.auth.*,!javax.security.jacc.*,javax.security.*</packages.export>
+    </properties>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-javaee-security-spec-maven</id>
+            <name>javaee-security-spec-maven</name>
+            <url>https://api.bintray.com/maven/javaee-security-spec/maven/javax.security:javax.security-api/;publish=1</url>
+        </repository>
+    </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
+            </plugin>
+            <!--
+             This plugin is reponsible for packaging artifacts
+             as OSGi bundles.  Please refer to
+             http://felix.apache.org/site/apache-felix-maven-bundle-plugin-bnd.html
+             for more information about how to use this plugin.
+            -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.2.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-Version>${spec.bundle.version}</Bundle-Version>
+                        <Bundle-SymbolicName>${spec.bundle.symbolic-name}</Bundle-SymbolicName>
+                        <Extension-Name>${spec.extension.name}</Extension-Name>
+                        <Implementation-Version>${spec.implementation.version}</Implementation-Version>
+                        <Specification-Version>${spec.specification.version}</Specification-Version>
+                        <Export-Package>${packages.export}</Export-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+            <!-- Configure the jar with the sources (or rather, convince Maven that 
+                                we want sources at all) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Configure the jar with the javadoc (or rather, convince Maven that 
+                                we want javadoc at all) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
+                <configuration>
+                    <javadocVersion>1.8</javadocVersion>
+                    <notimestamp>true</notimestamp>
+                    <splitindex>true</splitindex>
+                    <doctitle>Soteria API documentation</doctitle>
+                    <links>
+                        <link>https://docs.oracle.com/javaee/7/api/</link>
+                    </links>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>3.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <header>src/license/header.txt</header>
+                    <properties>
+                        <owner>Oracle</owner>
+                        <currentYear>2016</currentYear>
+                    </properties>
+                    <excludes>
+                        <exclude>**/*.adoc</exclude>
+                        <exclude>**/*.launch</exclude>
+                        <exclude>**/*.sh</exclude>
+                        <exclude>**/pom.xml</exclude>
+                        <exclude>**/README</exclude>
+                        <exclude>**/settings.xml</exclude>
+                        <exclude>src/license/**</exclude>
+                        <exclude>src/test/resources/**</exclude>
+                        <exclude>src/main/resources/**</exclude>
+                    </excludes>
+                    <headerDefinitions>
+                        <headerDefinition>src/license/headers.xml</headerDefinition>
+                    </headerDefinitions>
+                    <mapping>
+                        <java>JAVA_STYLE</java>
+                    </mapping>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.glassfish.build</groupId>
+                <artifactId>spec-version-maven-plugin</artifactId>
+                <configuration>
+                    <spec>
+                        <nonFinal>false</nonFinal>
+                        <jarType>api</jarType>
+                        <specVersion>${spec_version}</specVersion>
+                        <specImplVersion>${spec_impl_version}</specImplVersion>
+                        <apiPackage>${api_package}</apiPackage>
+                    </spec>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>set-spec-properties</goal>
+                            <!--<goal>check-module</goal>-->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+            <plugin>
+                <groupId>org.eclipse.m2e</groupId>
+                <artifactId>lifecycle-mapping</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <lifecycleMappingMetadata>
+                        <pluginExecutions>
+                            <pluginExecution>
+                                <pluginExecutionFilter>
+                                    <groupId>org.glassfish.build</groupId>
+                                    <artifactId>spec-version-maven-plugin</artifactId>
+                                    <versionRange>[1.2,)</versionRange>
+                                    <goals>
+                                        <goal>set-spec-properties</goal>
+                                    </goals>
+                                </pluginExecutionFilter>
+                                <action>
+                                    <ignore></ignore>
+                                </action>
+                            </pluginExecution>
+                        </pluginExecutions>
+                    </lifecycleMappingMetadata>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
