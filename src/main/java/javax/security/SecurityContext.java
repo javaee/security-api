@@ -50,6 +50,9 @@ public interface SecurityContext {
 	
 	Principal getCallerPrincipal();
 	boolean isCallerInRole(String role);
+	
+	boolean hasAccessToWebResource(String resource);
+	boolean hasAccessToWebResource(String resource, String... methods);
     
     AuthStatus authenticate(HttpServletRequest request, HttpServletResponse response, AuthenticationParameters parameters);
     AuthStatus authenticate(HttpServletResponse response, AuthenticationParameters parameters);
