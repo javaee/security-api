@@ -40,6 +40,7 @@
 package javax.security;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.security.auth.message.AuthStatus;
 import javax.security.authentication.mechanism.http.AuthenticationParameters;
@@ -50,6 +51,7 @@ public interface SecurityContext {
 	
 	Principal getCallerPrincipal();
 	boolean isCallerInRole(String role);
+	List<String> getAllDeclaredCallerRoles();
 	
 	boolean hasAccessToWebResource(String resource);
 	boolean hasAccessToWebResource(String resource, String... methods);
