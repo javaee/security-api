@@ -175,6 +175,7 @@
                         <exclude>src/license/**</exclude>
                         <exclude>src/test/resources/**</exclude>
                         <exclude>src/main/resources/**</exclude>
+                        <exclude>*.txt</exclude>
                     </excludes>
                     <headerDefinitions>
                         <headerDefinition>src/license/headers.xml</headerDefinition>
