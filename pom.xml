@@ -29,7 +29,7 @@
     <version>1.0-m02-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
-    <name>Java EE Security upstream API</name>
+    <name>Java EE Security API</name>
 
     <licenses>
         <license>
@@ -49,10 +49,10 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <api_package>javax.security</api_package>
-        <impl_namespace>org.glassfish.soteria</impl_namespace>
+        <impl_namespace>org.glassfish.soteria</impl_namespace><!-- This thould not be in the API, is it still used? -->
         <spec_version>1.0</spec_version>
-        <spec_impl_version>1.0-SNAPSHOT</spec_impl_version>
-        <impl_version>1.0-SNAPSHOT</impl_version>
+        <spec_impl_version>1.0-SNAPSHOT</spec_impl_version><!-- This thould not be in the API, is it still used? -->
+        <impl_version>1.0-SNAPSHOT</impl_version><!-- This thould not be in the API, is it still used? -->
 
         <packages.export>!javax.security.auth.*,!javax.security.jacc.*,javax.security.*</packages.export>
     </properties>
@@ -163,7 +163,7 @@
                     <header>src/license/header.txt</header>
                     <properties>
                         <owner>Oracle</owner>
-                        <currentYear>2016</currentYear>
+                        <currentYear>2017</currentYear>
                     </properties>
                     <excludes>
                         <exclude>**/*.adoc</exclude>
