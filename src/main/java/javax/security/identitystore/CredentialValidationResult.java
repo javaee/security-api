@@ -144,11 +144,10 @@ public class CredentialValidationResult {
 
         if (status == VALID) {
             this.callerPrincipal = callerPrincipal;
-            // TODO: to be discussed, should we use null or empty list?
             this.groups = groups != null ? unmodifiableList(new ArrayList<>(groups)) : emptyList();
         } else {
             this.callerPrincipal = null;
-            this.groups = null;
+            this.groups = emptyList();
         }
     }
 
@@ -170,8 +169,7 @@ public class CredentialValidationResult {
      * the associated identity store.
      *
      * @return The list of groups that the specified Caller is in, empty if
-     * none. <code>null</code> if {@link #getStatus} does not return
-     * {@link Status#VALID VALID}
+     * none.
      */
     public List<String> getCallerGroups() {
         return groups;
