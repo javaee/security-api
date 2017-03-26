@@ -59,123 +59,122 @@ import javax.security.identitystore.credential.Credential;
  */
 public class CredentialValidationResult {
 
-	public static final CredentialValidationResult INVALID_RESULT = new CredentialValidationResult(INVALID, null, null);
-    public static final CredentialValidationResult NOT_VALIDATED_RESULT = new CredentialValidationResult(NOT_VALIDATED, null, null);
+    public static final CredentialValidationResult INVALID_RESULT = new CredentialValidationResult(INVALID);
+    public static final CredentialValidationResult NOT_VALIDATED_RESULT = new CredentialValidationResult(NOT_VALIDATED);
 
     private final CallerPrincipal callerPrincipal;
-	private final Status status;
-	private final List<String> groups;
+    private final Status status;
+    private final List<String> groups;
 
-	public enum Status {
-		/**
-		 * Indicates that the credential could not be validated
-		 */
-		NOT_VALIDATED,
+    public enum Status {
+        /**
+         * Indicates that the credential could not be validated
+         */
+        NOT_VALIDATED,
+        /**
+         * Indicates that the credential is not valid after a validation
+         * attempt.
+         */
+        INVALID,
+        /**
+         * Indicates that the credential is valid after a validation attempt.
+         */
+        VALID
+    };
 
-		/**
-		 * Indicates that the credential is not valid after a validation
-		 * attempt.
-		 */
-		INVALID,
+    private CredentialValidationResult(Status status) {
+        this(status, null, null);
+        if (VALID == status) {
+            throw new IllegalArgumentException("status");
+        }
+    }
 
-		/**
-		 * Indicates that the credential is valid after a validation attempt.
-		 */
-		VALID
-	};
-	
-	/**
+    /**
      * Constructor for a VALID result
-     * 
+     *
      * @param callerName Name of the validated caller
      */
     public CredentialValidationResult(String callerName) {
         this(new CallerPrincipal(callerName), null);
     }
-    
+
     /**
      * Constructor for a VALID result
-     * 
+     *
      * @param callerPrincipal Validated caller
      */
     public CredentialValidationResult(CallerPrincipal callerPrincipal) {
         this(callerPrincipal, null);
     }
-	
+
     /**
      * Constructor for a VALID result
-     * 
-     * @param callerName
-     *            Name of the validated caller
-     * @param groups
-     *            Groups associated with the caller from the identity store
+     *
+     * @param callerName Name of the validated caller
+     * @param groups Groups associated with the caller from the identity store
      */
     public CredentialValidationResult(String callerName, List<String> groups) {
         this(new CallerPrincipal(callerName), groups);
     }
-	
-	/**
+
+    /**
      * Constructor for a VALID result
-     * 
-     * @param callerPrincipal
-     *            Validated caller
-     * @param groups
-     *            Groups associated with the caller from the identity store
+     *
+     * @param callerPrincipal Validated caller
+     * @param groups Groups associated with the caller from the identity store
      */
-	public CredentialValidationResult(CallerPrincipal callerPrincipal, List<String> groups) {
-	    this(VALID, callerPrincipal, groups);
-	}
-	
-	/**
-	 * Constructor
-	 *
-	 * @param status
-	 *            Validation status
-	 * @param callerPrincipal
-	 *            Validated caller
-	 * @param groups
-	 *            Groups associated with the caller from the identity store
-	 */
-	public CredentialValidationResult(Status status, CallerPrincipal callerPrincipal, List<String> groups) {
+    public CredentialValidationResult(CallerPrincipal callerPrincipal, List<String> groups) {
+        this(VALID, callerPrincipal, groups);
+    }
 
-		if (status == null) {
-			throw new NullPointerException("status");
-		}
+    /**
+     * Constructor
+     *
+     * @param status Validation status
+     * @param callerPrincipal Validated caller
+     * @param groups Groups associated with the caller from the identity store
+     */
+    private CredentialValidationResult(Status status, CallerPrincipal callerPrincipal, List<String> groups) {
 
-		this.status = status;
-		this.callerPrincipal = callerPrincipal;
+        if (status == null) {
+            throw new NullPointerException("status");
+        }
 
-		if (status == VALID) {
-		    // TODO: to be discussed, should we use null or empty list?
-			this.groups = groups != null? unmodifiableList(new ArrayList<>(groups)) : emptyList();
-		} else {
-			this.groups = null;
-		}
-	}
+        this.status = status;
 
-	/**
-	 * Determines the validation status.
-	 *
-	 * @return The validation status
-	 */
-	public Status getStatus() {
-		return status;
-	}
-	
+        if (status == VALID) {
+            this.callerPrincipal = callerPrincipal;
+            // TODO: to be discussed, should we use null or empty list?
+            this.groups = groups != null ? unmodifiableList(new ArrayList<>(groups)) : emptyList();
+        } else {
+            this.callerPrincipal = null;
+            this.groups = null;
+        }
+    }
+
+    /**
+     * Determines the validation status.
+     *
+     * @return The validation status
+     */
+    public Status getStatus() {
+        return status;
+    }
+
     public CallerPrincipal getCallerPrincipal() {
         return callerPrincipal;
     }
 
-	/**
-	 * Determines the list of groups that the specified Caller is in, based on
-	 * the associated identity store.
-	 *
-	 * @return The list of groups that the specified Caller is in, empty if
-	 *         none. <code>null</code> if {@link #getStatus} does not return
-	 *         {@link Status#VALID VALID} 
-	 */
-	public List<String> getCallerGroups() {
-		return groups;
-	}
+    /**
+     * Determines the list of groups that the specified Caller is in, based on
+     * the associated identity store.
+     *
+     * @return The list of groups that the specified Caller is in, empty if
+     * none. <code>null</code> if {@link #getStatus} does not return
+     * {@link Status#VALID VALID}
+     */
+    public List<String> getCallerGroups() {
+        return groups;
+    }
 
 }
