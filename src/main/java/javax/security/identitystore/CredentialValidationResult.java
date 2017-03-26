@@ -59,8 +59,8 @@ import javax.security.identitystore.credential.Credential;
  */
 public class CredentialValidationResult {
 
-    public static final CredentialValidationResult INVALID_RESULT = new CredentialValidationResult(INVALID, null, null);
-    public static final CredentialValidationResult NOT_VALIDATED_RESULT = new CredentialValidationResult(NOT_VALIDATED, null, null);
+    public static final CredentialValidationResult INVALID_RESULT = new CredentialValidationResult(INVALID);
+    public static final CredentialValidationResult NOT_VALIDATED_RESULT = new CredentialValidationResult(NOT_VALIDATED);
 
     private final CallerPrincipal callerPrincipal;
     private final Status status;
@@ -81,6 +81,13 @@ public class CredentialValidationResult {
          */
         VALID
     };
+
+    private CredentialValidationResult(Status status) {
+        this(status, null, null);
+        if (VALID == status) {
+            throw new IllegalArgumentException("status");
+        }
+    }
 
     /**
      * Constructor for a VALID result
@@ -127,19 +134,20 @@ public class CredentialValidationResult {
      * @param callerPrincipal Validated caller
      * @param groups Groups associated with the caller from the identity store
      */
-    public CredentialValidationResult(Status status, CallerPrincipal callerPrincipal, List<String> groups) {
+    private CredentialValidationResult(Status status, CallerPrincipal callerPrincipal, List<String> groups) {
 
         if (status == null) {
             throw new NullPointerException("status");
         }
 
         this.status = status;
-        this.callerPrincipal = callerPrincipal;
 
         if (status == VALID) {
+            this.callerPrincipal = callerPrincipal;
             // TODO: to be discussed, should we use null or empty list?
             this.groups = groups != null ? unmodifiableList(new ArrayList<>(groups)) : emptyList();
         } else {
+            this.callerPrincipal = null;
             this.groups = null;
         }
     }
