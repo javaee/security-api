@@ -65,24 +65,12 @@ public class TokenCredential implements Credential {
         this.token = token;
     }
 
-    /**
-     * Determines whether the credential is valid. This would be called as part of
-     * the credential validation process to check the integrity of the credential,
-     * such as a signature check. This check would be self-contained,
-     * not requiring identity store access.
-     *
-     * @return <code>true</code> if credential has integrity.
-     */
+    @Override
     public boolean isValid() {
         return valid;
     }
 
-    /**
-     * Determines the caller associated with this credential. This value would
-     * usually be the unique value identifying the caller, like a login name.
-     *
-     * @return The caller associated with this credential
-     */
+    @Override
     public String getCaller() {
         return caller;
     }
