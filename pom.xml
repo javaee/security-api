@@ -50,6 +50,11 @@
             <name>javaee-security-spec-maven</name>
             <url>https://api.bintray.com/maven/javaee-security-spec/maven/javax.security:javax.security-api/;publish=1</url>
         </repository>
+        <snapshotRepository>
+			<id>bintray-snapshot</id>
+			<name>oss-jfrog-artifactory-snapshot</name>
+			<url>https://oss.jfrog.org/artifactory/oss-snapshot-local</url>
+		</snapshotRepository>
     </distributionManagement>
 
     <dependencies>
