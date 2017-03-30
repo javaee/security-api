@@ -53,9 +53,7 @@ import javax.servlet.http.HttpServletRequest;
  * Annotation used to define a container {@link AuthenticationMechanism} that implements
  * authentication mechanism resembling the Servlet FORM one. Instead of posting back
  * to a predefined action, this variant depends on the application calling
- * {@link HttpServletRequest#authenticate(javax.servlet.http.HttpServletResponse)}.  
- * 
- * @author Arjan Tijms
+ * {@link HttpServletRequest#authenticate(javax.servlet.http.HttpServletResponse)}.
  *
  */
 @Retention(RUNTIME)

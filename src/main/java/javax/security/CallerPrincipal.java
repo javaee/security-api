@@ -49,8 +49,6 @@ import javax.servlet.http.HttpServletRequest;
  * <p>
  * When JSR 375 authentication is used this type, or a sub-type thereof, is what should be 
  * returned by other Java EE platform APIs, such as {@link HttpServletRequest#getUserPrincipal()}
- * 
- * @author Arjan Tijms
  *
  */
 public class CallerPrincipal implements Principal {

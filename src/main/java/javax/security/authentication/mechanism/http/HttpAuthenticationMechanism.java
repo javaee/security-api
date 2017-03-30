@@ -75,9 +75,6 @@ import javax.servlet.http.HttpServletResponse;
  * caller name with optional groups to an {@link IdentityStore}. This is however <b>not</b> required and implementations
  * can either do the validation checks for authentication completely autonomously, or delegate only certain aspects of
  * the process to the store (e.g. use the store only for retrieving the groups an authenticated user is in).
- * 
- * @author Arjan Tijms
- *
  */
 public interface HttpAuthenticationMechanism {
 

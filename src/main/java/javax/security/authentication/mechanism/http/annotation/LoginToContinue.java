@@ -57,9 +57,6 @@ import javax.resource.spi.AuthenticationMechanism;
  * <p>
  * ### This is work in progress ###
  *
- * 
- * @author Arjan Tijms
- *
  */
 @Inherited
 @InterceptorBinding
