@@ -42,11 +42,11 @@ package javax.security.authentication.mechanism.http;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.AuthenticationStatus;
 import javax.security.CallerPrincipal;
 import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.message.AuthException;
-import javax.security.auth.message.AuthStatus;
 import javax.security.auth.message.MessageInfo;
 import javax.security.identitystore.CredentialValidationResult;
 import javax.servlet.http.HttpServletRequest;
@@ -153,42 +153,42 @@ public class HttpMessageContextWrapper implements HttpMessageContext {
     }
 
     @Override
-    public AuthStatus redirect(String location) {
+    public AuthenticationStatus redirect(String location) {
         return getWrapped().redirect(location);
     }
 
     @Override
-    public AuthStatus forward(String path) {
+    public AuthenticationStatus forward(String path) {
         return getWrapped().forward(path);
     }
 
     @Override
-    public AuthStatus responseUnAuthorized() {
+    public AuthenticationStatus responseUnAuthorized() {
         return getWrapped().responseUnAuthorized();
     }
 
     @Override
-    public AuthStatus responseNotFound() {
+    public AuthenticationStatus responseNotFound() {
         return getWrapped().responseNotFound();
     }
 
     @Override
-    public AuthStatus notifyContainerAboutLogin(String username, List<String> roles) {
+    public AuthenticationStatus notifyContainerAboutLogin(String username, List<String> roles) {
         return getWrapped().notifyContainerAboutLogin(username, roles);
     }
 
     @Override
-    public AuthStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, List<String> roles) {
+    public AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, List<String> roles) {
         return getWrapped().notifyContainerAboutLogin(callerPrincipal, roles);
     }
 
     @Override
-    public AuthStatus notifyContainerAboutLogin(CredentialValidationResult result) throws AuthException {
+    public AuthenticationStatus notifyContainerAboutLogin(CredentialValidationResult result) throws AuthException {
         return getWrapped().notifyContainerAboutLogin(result);
     }
 
     @Override
-    public AuthStatus doNothing() {
+    public AuthenticationStatus doNothing() {
         return getWrapped().doNothing();
     }
 

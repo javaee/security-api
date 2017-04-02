@@ -42,6 +42,7 @@ package javax.security.authentication.mechanism.http;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.AuthenticationStatus;
 import javax.security.CallerPrincipal;
 import javax.security.SecurityContext;
 import javax.security.auth.Subject;
@@ -178,9 +179,9 @@ public interface HttpMessageContext {
      * 
      * @return {@link AuthStatus#SEND_CONTINUE}
      */
-    AuthStatus redirect(String location);
+    AuthenticationStatus redirect(String location);
     
-    AuthStatus forward(String path);
+    AuthenticationStatus forward(String path);
     
 
     /**
@@ -191,7 +192,7 @@ public interface HttpMessageContext {
      * 
      * @return {@link AuthStatus#SEND_FAILURE}
      */
-    AuthStatus responseUnAuthorized();
+    AuthenticationStatus responseUnAuthorized();
 
     /**
      * Sets the response status to 404 (not found).
@@ -201,7 +202,7 @@ public interface HttpMessageContext {
      * 
      * @return {@link AuthStatus#SEND_FAILURE}
      */
-    AuthStatus responseNotFound();
+    AuthenticationStatus responseNotFound();
 
     /**
      * Asks the container to register the given caller name and groups in order to make
@@ -221,11 +222,11 @@ public interface HttpMessageContext {
      * @return {@link AuthStatus#SUCCESS}
      *
      */
-    AuthStatus notifyContainerAboutLogin(String username, List<String> roles);
+    AuthenticationStatus notifyContainerAboutLogin(String username, List<String> roles);
     
-    AuthStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, List<String> roles);
+    AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, List<String> roles);
     
-    AuthStatus notifyContainerAboutLogin(CredentialValidationResult result) throws AuthException;
+    AuthenticationStatus notifyContainerAboutLogin(CredentialValidationResult result) throws AuthException;
 
     /**
      * Instructs the container to "do nothing".
@@ -246,7 +247,7 @@ public interface HttpMessageContext {
      * 
      * @return {@link AuthStatus#SUCCESS}
      */
-    AuthStatus doNothing();
+    AuthenticationStatus doNothing();
     
     CallerPrincipal getCallerPrincipal();
 
