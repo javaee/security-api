@@ -73,8 +73,6 @@ import javax.resource.spi.AuthenticationMechanism;
  *     }
  * </code>
  * </pre>
- * 
- * @author Arjan Tijms
  *
  */
 @Inherited

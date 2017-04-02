@@ -52,8 +52,6 @@ import javax.resource.spi.AuthenticationMechanism;
  * Annotation used to define a container {@link AuthenticationMechanism} that implements
  * FORM authentication mechanism as defined by the Servlet spec and make that implementation
  * available as an enabled CDI bean.
- * 
- * @author Arjan Tijms
  *
  */
 @Retention(RUNTIME)

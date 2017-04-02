@@ -44,9 +44,7 @@ import javax.security.identitystore.credential.Credential;
 /**
  * Parameters that are provided along with an authentication request.
  * 
- * NOTICE: DESIGN MOCKUP / EARLY DRAFT
- *
- * @author Arjan Tijms
+ * NOTICE: EARLY DRAFT
  *
  */
 public class AuthenticationParameters {

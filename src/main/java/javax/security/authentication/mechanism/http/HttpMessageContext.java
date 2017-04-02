@@ -59,8 +59,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * <code>HttpMessageContext</code> contains all of the per-request state information and encapsulates the client request, 
  * server response, container handler for authentication callbacks, and the subject representing the caller.
- * 
- * @author Arjan Tijms
  *
  */
 public interface HttpMessageContext {

@@ -87,8 +87,6 @@ import javax.servlet.http.Cookie;
  *     }
  * </code>
  * </pre>
- * 
- * @author Arjan Tijms
  *
  */
 @Inherited

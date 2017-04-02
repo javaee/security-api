@@ -52,7 +52,6 @@ import javax.security.identitystore.credential.Credential;
  * <p>
  * Other beans should only inject this handler and not the IdentityStore directly as multiple stores can exists.
  *
- * @author Rudy De Busscher
  */
 public interface IdentityStoreHandler {
 
