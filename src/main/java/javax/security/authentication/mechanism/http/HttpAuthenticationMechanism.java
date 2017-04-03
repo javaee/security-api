@@ -39,10 +39,10 @@
  */
 package javax.security.authentication.mechanism.http;
 
-import static javax.security.auth.message.AuthStatus.SEND_SUCCESS;
+import static javax.security.AuthenticationStatus.SUCCESS;
 
+import javax.security.AuthenticationStatus;
 import javax.security.auth.message.AuthException;
-import javax.security.auth.message.AuthStatus;
 import javax.security.auth.message.module.ServerAuthModule;
 import javax.security.authentication.mechanism.http.annotation.AutoApplySession;
 import javax.security.authentication.mechanism.http.annotation.RememberMe;
@@ -101,7 +101,7 @@ public interface HttpAuthenticationMechanism {
      * @return the completion status of the processing performed by this method
      * @throws AuthException when the processing failed
      */
-    AuthStatus validateRequest(HttpServletRequest request, HttpServletResponse response, HttpMessageContext httpMessageContext) throws AuthException;
+    AuthenticationStatus validateRequest(HttpServletRequest request, HttpServletResponse response, HttpMessageContext httpMessageContext) throws AuthException;
    
     /**
      * Secure the response, optionally.
@@ -120,8 +120,8 @@ public interface HttpAuthenticationMechanism {
      * @return the completion status of the processing performed by this method
      * @throws AuthException when the processing failed
      */
-    default AuthStatus secureResponse(HttpServletRequest request, HttpServletResponse response, HttpMessageContext httpMessageContext) throws AuthException {
-        return SEND_SUCCESS;
+    default AuthenticationStatus secureResponse(HttpServletRequest request, HttpServletResponse response, HttpMessageContext httpMessageContext) throws AuthException {
+        return SUCCESS;
     }
     
     /**
