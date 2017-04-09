@@ -40,16 +40,16 @@
 package javax.security.identitystore;
 
 import static java.lang.invoke.MethodType.methodType;
-import static java.util.Collections.emptyList;
+import static java.util.Collections.emptySet;
 import static javax.security.identitystore.CredentialValidationResult.NOT_VALIDATED_RESULT;
 import static javax.security.identitystore.IdentityStore.ValidationType.BOTH;
 
 import java.lang.invoke.MethodHandles;
-import java.util.List;
+import java.util.Set;
 
-import javax.security.authentication.mechanism.http.HttpAuthenticationMechanism;
 import javax.security.CallerPrincipal;
 import javax.security.auth.message.module.ServerAuthModule;
+import javax.security.authentication.mechanism.http.HttpAuthenticationMechanism;
 import javax.security.identitystore.credential.Credential;
 
 /**
@@ -104,8 +104,8 @@ public class ExampleIdentityStore implements IdentityStore {
 		}
     }
     
-    default List<String> getGroupsByCallerPrincipal(CallerPrincipal callerPrincipal) {
-    	return emptyList();
+    default Set<String> getGroupsByCallerPrincipal(CallerPrincipal callerPrincipal) {
+    	return emptySet();
     }
 
     /**
