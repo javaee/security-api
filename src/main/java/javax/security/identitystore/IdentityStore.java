@@ -131,11 +131,11 @@ public class ExampleIdentityStore implements IdentityStore {
         /**
          * Only Authentication is performed, so no roles and groups are determined.
          **/
-        AUTHENTICATION,
+        VALIDATE,
         /**
          * Only Authorization is performed, so only roles and groups for a principal established by another IdentityStore are determined.
          */
-        AUTHORIZATION,
+        PROVIDE_GROUPS,
         BOTH
     }
 }
