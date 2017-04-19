@@ -175,6 +175,8 @@ public interface HttpMessageContext {
      * As a convenience this method returns SEND_CONTINUE, so this method can be used in
      * one fluent return statement from an {@link HttpAuthenticationMechanism}
      * 
+     * @param location the location to redirect to
+     * 
      * @return {@link AuthStatus#SEND_CONTINUE}
      */
     AuthenticationStatus redirect(String location);
