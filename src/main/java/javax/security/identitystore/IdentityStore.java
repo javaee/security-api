@@ -42,9 +42,11 @@ package javax.security.identitystore;
 import static java.lang.invoke.MethodType.methodType;
 import static java.util.Collections.emptySet;
 import static javax.security.identitystore.CredentialValidationResult.NOT_VALIDATED_RESULT;
-import static javax.security.identitystore.IdentityStore.ValidationType.BOTH;
+import static javax.security.identitystore.IdentityStore.ValidationType.PROVIDE_GROUPS;
+import static javax.security.identitystore.IdentityStore.ValidationType.VALIDATE;
 
 import java.lang.invoke.MethodHandles;
+import java.util.EnumSet;
 import java.util.Set;
 
 import javax.security.CallerPrincipal;
@@ -65,6 +67,8 @@ import javax.security.identitystore.credential.Credential;
  * such as a file, database, or LDAP.
  */
 public interface IdentityStore {
+    
+    public static final Set<ValidationType> DEFAULT_VALIDATION_TYPES = EnumSet.of(VALIDATE, PROVIDE_GROUPS);
 
     /**
      * Validates the given credential.
@@ -117,25 +121,31 @@ public class ExampleIdentityStore implements IdentityStore {
     }
 
     /**
-     * Determines the type of validation the IdentityStore performs. By default, it performs authentication AND authorization.
+     * Determines the type of validation the IdentityStore should be used for. 
+     * By default, its used for credential validation AND providing groups.
      * @return Type of validation.
      */
-    default ValidationType validationType() {
-        return BOTH;
+    default Set<ValidationType> validationTypes() {
+        return DEFAULT_VALIDATION_TYPES;
     }
+    
+    
 
     /**
-     * Determines the type of validation
+     * Determines the type of validation (operations) that should be done by this store.
+     * <b>NOTE:</b> This does not set or determine what the identity store is capable of,
+     * but only what the store is configured to be used for.
      */
     enum ValidationType {
+        
         /**
-         * Only Authentication is performed, so no roles and groups are determined.
+         * Only validation is performed, so no groups, are taken from this store.
          **/
         VALIDATE,
+        
         /**
-         * Only Authorization is performed, so only roles and groups for a principal established by another IdentityStore are determined.
+         * Only groups for a principal, possibly established by another IdentityStore, are taken from this store.
          */
-        PROVIDE_GROUPS,
-        BOTH
+        PROVIDE_GROUPS
     }
 }

@@ -41,11 +41,14 @@ package javax.security.identitystore.annotation;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static javax.security.identitystore.IdentityStore.ValidationType.PROVIDE_GROUPS;
+import static javax.security.identitystore.IdentityStore.ValidationType.VALIDATE;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import javax.security.identitystore.IdentityStore;
+import javax.security.identitystore.IdentityStore.ValidationType;
 
 /**
  * Annotation used to define a container provided {@link IdentityStore} that stores
@@ -91,15 +94,10 @@ public @interface EmbeddedIdentityStoreDefinition {
     int priority() default 90;
 
     /**
-     * Defines if the IdentityStore does only Authentication. By default this value is false so that authentication and authorization are performed.
-     * @return does the IdentityStore only do Authentication?
+     * Determines what the identity store is used for
+     * 
+     * @return the type the identity store is used for
      */
-    boolean authenticateOnly() default false;
-
-    /**
-     * Defines if the IdentityStore does only Authorization. By default this value is false so that authentication and authorization are performed.
-     * @return does the IdentityStore only do Authentication?
-     */
-    boolean authorizeOnly() default false;
+    ValidationType[] useFor() default {VALIDATE, PROVIDE_GROUPS};
 
 }
