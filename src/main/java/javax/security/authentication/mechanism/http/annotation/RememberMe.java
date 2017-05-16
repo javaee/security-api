@@ -51,26 +51,27 @@ import javax.enterprise.util.Nonbinding;
 import javax.interceptor.InterceptorBinding;
 import javax.resource.spi.AuthenticationMechanism;
 import javax.security.authentication.mechanism.http.HttpMessageContext;
+import javax.security.identitystore.IdentityStore;
 import javax.security.identitystore.RememberMeIdentityStore;
 import javax.servlet.http.Cookie;
 
 /**
  * The RememberMe annotation provides an application the ability to declarative designate 
- * that an {@link AuthenticationMechanism} "remembers" the authentication and auto
+ * that an {@link AuthenticationMechanism} effectively "remembers" the authentication and auto
  * applies this with every request.
  * 
  * <p>
- * The location where this authentication is remembered has to be set by enabling a bean in
- * the application that implements the {@link RememberMeIdentityStore} interface.
- * 
- * <p>
- * For the remember me function the credentials provided by the caller are exchanged for a token
+ * For the remember me function the credentials provided by the caller are exchanged for a (long-lived) token
  * which is send to the user as the value of a cookie, in a similar way to how the HTTP session ID is send.
  * It should be realized that this token effectively becomes the credential to establish the caller's
  * identity within the application and care should be taken to handle and store the token securely. E.g.
- * by using this feature with a secure transport (SSL/https), storing a strong hash instead of the actual
+ * by using this feature with a secure transport (SSL/HTTPS), storing a strong hash instead of the actual
  * token, and implementing an expiration policy. 
  * 
+ * <p>
+ * The token is vended by a special purpose {@link IdentityStore}-like artifact; an implementation of the
+ * {@link RememberMeIdentityStore}.  
+ *  
  * <p>
  * This support is provided via an implementation of an interceptor spec interceptor that conducts the
  * necessary logic.
@@ -87,6 +88,11 @@ import javax.servlet.http.Cookie;
  *     }
  * </code>
  * </pre>
+ * 
+ * <p>
+ * <b>Note:</b> this facility <em>DOES NOT</em> constitute any kind of "session management" system, but instead
+ * represents a special purpose authentication mechanism using a long-lived token, that is vended and validated by the
+ * {@link RememberMeIdentityStore}.
  *
  */
 @Inherited
@@ -106,6 +112,30 @@ public @interface RememberMe {
      */
     @Nonbinding
     int cookieMaxAgeSeconds() default 86400; // 1 day
+    
+    /**
+     * Flag to indicate that the remember me cookie should only be 
+     * sent using a secure protocol (e.g. HTTPS or SSL).
+     * 
+     * @see Cookie#setSecure(boolean)
+     * 
+     * @return true if the cookie should be sent using a secure protocol only
+     * false for any protocol.
+     */
+    @Nonbinding
+    boolean cookieSecureOnly() default true;
+    
+    /**
+     * Flag to indicate that the remember me cookie should not be exposed to
+     * client-side scripting code, and should only be sent with HTTP requests.
+     * 
+     * @see Cookie#setHttpOnly(boolean)
+     * 
+     * @return true if the cookie should be sent only with HTTP requests 
+     * (and not be made available to client-side scripting code), false otherwise.
+     */
+    @Nonbinding
+    boolean cookieHttpOnly() default true;
     
     /**
      * Name of the remember me cookie.

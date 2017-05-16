@@ -53,9 +53,6 @@ import javax.resource.spi.AuthenticationMechanism;
 /**
  * The LoginToContinue annotation provides an application the ability to declaratively 
  * add login to continue functionality to an {@link AuthenticationMechanism}.
- * 
- * <p>
- * ### This is work in progress ###
  *
  */
 @Inherited
@@ -64,17 +61,30 @@ import javax.resource.spi.AuthenticationMechanism;
 @Target(TYPE)
 public @interface LoginToContinue {
     
+    /**
+     * The resource (page) a caller should get to see in case the originally requested
+     * resource requires authentication, and the caller is currently not authenticated.
+     * 
+     * @return page a caller is directed to to authenticate (login)
+     */
     @Nonbinding
     String loginPage() default "/login";
     
-    // Use a forward to reach the page set by loginPage if true, otherwise use a redirect
-    // TODO: if redirect, set status code?
+    /**
+     * Use a forward to reach the page set by the {@link LoginToContinue#loginPage()} 
+     * if true, otherwise use a redirect.
+     * 
+     * @return true if a forward is to be used, false for a redirect
+     */
     @Nonbinding
     boolean useForwardToLogin() default true;
     
-    // TODO: add parameters?
-    // TODO: choice between redirect/forward?
-    
+    /**
+     * The resource (page) a caller should get to see in case an error, such as providing invalid
+     * credentials, occurs on the page set by {@link LoginToContinue#loginPage()}.
+     * 
+     * @return page a caller is directed to after an authentication (login) error
+     */
     @Nonbinding
     String errorPage() default "/login-error";
     

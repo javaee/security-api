@@ -49,9 +49,9 @@ import javax.enterprise.util.Nonbinding;
 import javax.resource.spi.AuthenticationMechanism;
 
 /**
- * Annotation used to define a container {@link AuthenticationMechanism} that implements
- * FORM authentication mechanism as defined by the Servlet spec and make that implementation
- * available as an enabled CDI bean.
+ * Annotation used to define a container {@link AuthenticationMechanism} that implements the
+ * FORM authentication mechanism as defined by the Servlet spec (13.6.3) and make that 
+ * implementation available as an enabled CDI bean.
  *
  */
 @Retention(RUNTIME)
