@@ -55,7 +55,7 @@ import javax.resource.spi.AuthenticationMechanism;
  * and auto applies this for every request.
  * 
  * <p>
- * See the JASPIC specification for further details on <code>javax.servlet.http.registerSession</code>.
+ * See the JASPIC 1.1 specification section 3.8.4 for further details on <code>javax.servlet.http.registerSession</code>.
  * 
  * <p>
  * This support is provided via an implementation of an interceptor spec interceptor that conducts the

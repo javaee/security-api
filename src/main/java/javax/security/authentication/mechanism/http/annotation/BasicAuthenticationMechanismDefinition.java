@@ -49,8 +49,8 @@ import javax.resource.spi.AuthenticationMechanism;
 
 /**
  * Annotation used to define a container {@link AuthenticationMechanism} that implements
- * the HTTP basic access authentication protocol and make that implementation available
- * as an enabled CDI bean.
+ * the HTTP basic access authentication protocol as defined by the Servlet spec (13.6.1)  
+ * and make that implementation available as an enabled CDI bean.
  *
  */
 @Retention(RUNTIME)
