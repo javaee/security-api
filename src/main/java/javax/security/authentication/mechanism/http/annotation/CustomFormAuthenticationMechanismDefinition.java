@@ -47,6 +47,7 @@ import java.lang.annotation.Target;
 
 import javax.enterprise.util.Nonbinding;
 import javax.resource.spi.AuthenticationMechanism;
+import javax.security.SecurityContext;
 
 /**
  * Annotation used to define a container {@link AuthenticationMechanism} that implements
@@ -54,7 +55,7 @@ import javax.resource.spi.AuthenticationMechanism;
  * <p> 
  * Instead of posting back to a predefined action to continue the authentication dialog 
  * (Servlet spec 13.6.3 step 3), this variant depends on the application calling 
- * {@link SecurityContext#authenticate(javax.servlet.http.HttpServletResponse, javax.security.authentication.mechanism.http.AuthenticationParameters).
+ * {@link SecurityContext#authenticate(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.security.authentication.mechanism.http.AuthenticationParameters)}
  * 
  *
  */
