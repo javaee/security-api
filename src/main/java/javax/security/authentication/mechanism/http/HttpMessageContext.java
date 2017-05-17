@@ -48,10 +48,7 @@ import javax.security.SecurityContext;
 import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.message.AuthException;
-import javax.security.auth.message.AuthStatus;
 import javax.security.auth.message.MessageInfo;
-import javax.security.auth.message.config.ServerAuthContext;
-import javax.security.auth.message.module.ServerAuthModule;
 import javax.security.identitystore.CredentialValidationResult;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -92,13 +89,10 @@ public interface HttpMessageContext {
 
     /**
      * Asks the runtime to register an authentication session. This will automatically remember the logged-in status
-     * as long as the current HTTP session remains valid. Without this being asked, a SAM has to manually re-authenticate
-     * with the runtime at the start of each request.
-     * <p>
-     * Note that the user name and roles being asked is an implementation detail; there is no portable way to have
-     * an auth context read back the user name and roles that were processed by the {@link CallbackHandler}.
+     * as long as the current HTTP session remains valid. Without this being asked, a {@link HttpAuthenticationMechanism} 
+     * has to manually re-authenticate with the runtime at the start of each request.
      * 
-     * @param callerName the user name for which authentication should be be remembered
+     * @param callerName the caller name for which authentication should be be remembered
      * @param groups the groups for which authentication should be remembered.
      */
     void setRegisterSession(String callerName, List<String> groups);
@@ -177,7 +171,7 @@ public interface HttpMessageContext {
      * 
      * @param location the location to redirect to
      * 
-     * @return {@link AuthStatus#SEND_CONTINUE}
+     * @return {@link AuthenticationStatus#SEND_CONTINUE}
      */
     AuthenticationStatus redirect(String location);
     
@@ -190,7 +184,7 @@ public interface HttpMessageContext {
      * As a convenience this method returns SEND_FAILURE, so this method can be used in
      * one fluent return statement from an {@link HttpAuthenticationMechanism}
      * 
-     * @return {@link AuthStatus#SEND_FAILURE}
+     * @return {@link AuthenticationStatus#SEND_FAILURE}
      */
     AuthenticationStatus responseUnAuthorized();
 
@@ -200,7 +194,7 @@ public interface HttpMessageContext {
      * As a convenience this method returns SEND_FAILURE, so this method can be used in
      * one fluent return statement from an {@link HttpAuthenticationMechanism}
      * 
-     * @return {@link AuthStatus#SEND_FAILURE}
+     * @return {@link AuthenticationStatus#SEND_FAILURE}
      */
     AuthenticationStatus responseNotFound();
 
@@ -210,19 +204,19 @@ public interface HttpMessageContext {
      *
      * <p>
      * Note that after this call returned, the authenticated identity will not be immediately active. This
-     * will only take place (should not errors occur) after the {@link ServerAuthContext} or {@link ServerAuthModule}
-     * in which this call takes place return control back to the runtime.
+     * will only take place (should no errors occur) after the authentication mechanism
+     * in which this call takes place returns control back to the container (runtime).
      * 
      * <p>
      * As a convenience this method returns SUCCESS, so this method can be used in
-     * one fluent return statement from an auth module.
+     * one fluent return statement from an {@link HttpAuthenticationMechanism}
      * 
-     * @param username the user name that will become the caller principal
-     * @param roles the roles associated with the caller principal
-     * @return {@link AuthStatus#SUCCESS}
+     * @param callername the caller name that will become the caller principal
+     * @param groups the roles associated with the caller principal
+     * @return {@link AuthenticationStatus#SUCCESS}
      *
      */
-    AuthenticationStatus notifyContainerAboutLogin(String username, List<String> roles);
+    AuthenticationStatus notifyContainerAboutLogin(String callername, List<String> groups);
     
     AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, List<String> roles);
     
@@ -232,20 +226,14 @@ public interface HttpMessageContext {
      * Instructs the container to "do nothing".
      * 
      * <p>
-     * This is a somewhat peculiar requirement of JASPIC, which incidentally almost no containers actually require
-     * or enforce. 
+     * When intending to do nothing, a JSR 375 authentication mechanism has to indicate this
+     * explicitly via its return value.
      * 
      * <p>
-     * When intending to do nothing, most JASPIC auth modules simply return "SUCCESS", but according to
-     * the JASPIC spec the handler MUST have been used when returning that status. Because of this JASPIC
-     * implicitly defines a "protocol" that must be followed in this case; 
-     * invoking the CallerPrincipalCallback handler with a null as the username.
+     * As a convenience this method returns NOT_DONE, so this method can be used in
+     * one fluent return statement from an {@link HttpAuthenticationMechanism}
      * 
-     * <p>
-     * As a convenience this method returns SUCCESS, so this method can be used in
-     * one fluent return statement from an auth module.
-     * 
-     * @return {@link AuthStatus#SUCCESS}
+     * @return {@link AuthenticationStatus#NOT_DONE}
      */
     AuthenticationStatus doNothing();
     
