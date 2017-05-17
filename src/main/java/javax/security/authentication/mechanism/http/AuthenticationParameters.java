@@ -43,8 +43,6 @@ import javax.security.identitystore.credential.Credential;
 
 /**
  * Parameters that are provided along with an authentication request.
- * 
- * NOTICE: EARLY DRAFT
  *
  */
 public class AuthenticationParameters {
@@ -55,11 +53,11 @@ public class AuthenticationParameters {
     // continuing a potentially existing one
     private boolean newAuthentication;
 
-    private boolean rememberMe; // draft idea; to let the caller indicate right away remember me is required. Or is this too specific?
-    private boolean noPassword; // draft idea; for runAs and/or refresh authenticated identity purposes
+    private boolean rememberMe;
+    private boolean noPassword;
     private String authMethod;
 
-    private String redirectUrl; // draft idea; optional URL to redirect to after authentication succeeded
+    private String redirectUrl;
 
     public static AuthenticationParameters withParams() {
         return new AuthenticationParameters();

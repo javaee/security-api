@@ -42,10 +42,12 @@ package javax.security;
 import java.security.Principal;
 import java.util.List;
 
+import javax.annotation.security.DeclareRoles;
 import javax.ejb.SessionContext;
 import javax.security.authentication.mechanism.http.AuthenticationParameters;
 import javax.security.authentication.mechanism.http.HttpAuthenticationMechanism;
 import javax.security.identitystore.IdentityStore;
+import javax.security.jacc.WebResourcePermission;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -90,15 +92,84 @@ public interface SecurityContext {
 	 * 
 	 * 	  
 	 * @param role a <code>String</code> specifying the name of the logical application role
-	 * @return <code>true</code> if the authentication caller is in the given role, false if the caller is not authentication or
+	 * @return <code>true</code> if the authenticated caller is in the given role, false if the caller is not authentication or
 	 * is not in the given role.
 	 */
 	boolean isCallerInRole(String role);
+	
+	/**
+	 *  A list of all static (application) roles that the authenticated caller is in or the empty list if the caller is either not
+	 *  authenticated or is not in any role.
+	 *  
+	 *  <p>
+	 *  A static role is a role that is declared upfront in the application, for example via the {@link DeclareRoles}
+	 *  annotation, and is discovered during startup. 
+	 *  
+	 * @return A list of all static roles the current caller is in, or the empty list if that caller is not authenticated or has
+	 * no roles.
+	 */
 	List<String> getAllDeclaredCallerRoles();
 	
+	/**
+	 * Checks whether the caller has access to the provided "web resource" using the GET HTTP method, 
+	 * such as specified by section 13.8 of the Servlet specification, and the JACC specification, 
+	 * specifically the {@link WebResourcePermission} type.
+	 * 
+	 * <p>
+	 * A caller has access if the web resource is either not protected (constrained), or when it is protected by a role
+	 * and the caller is in that role.
+	 * 
+	 * @param resource the name of the web resource to test access for. This is a <code>URLPatternSpec</code> that 
+	 * identifies the application specific web resources to which the permission pertains. For a full specification of this
+	 * pattern see {@link WebResourcePermission#WebResourcePermission(String, String)}.
+     * 
+	 * @return <code>true</code> if the caller has access to the web resource, <code>false</code> otherwise. 
+	 */
 	boolean hasAccessToWebResource(String resource);
+	
+	/**
+     * Checks whether the caller has access to the provided "web resource" using the given methods, 
+     * such as specified by section 13.8 of the Servlet specification, and the JACC specification, 
+     * specifically the {@link WebResourcePermission} type.
+     * 
+     * <p>
+     * A caller has access if the web resource is either not protected (constrained), or when it is protected by a role
+     * and the caller is in that role.
+     * 
+     * @param resource the name of the web resource to test access for. This is a <code>URLPatternSpec</code> that 
+     * identifies the application specific web resources to which the permission pertains. For a full specification of this
+     * pattern see {@link WebResourcePermission#WebResourcePermission(String, String)}.
+     * @param methods one or more methods to check for whether the caller has access to the web resource using one of those methods.
+     * 
+     * @return <code>true</code> if the caller has access to the web resource using one of the given methods, <code>false</code> otherwise. 
+     */
 	boolean hasAccessToWebResource(String resource, String... methods);
     
+	/**
+	 * Signal to the container (programmatically trigger) that it should start or continue a web/HTTP based authentication dialog with 
+	 * the caller. 
+	 * 
+	 * <p>
+     * Programmatically triggering means that the container responds as if the caller had attempted to access a constrained resource
+     * and acts by invoking a configured authentication mechanism (such as the {@link HttpAuthenticationMechanism}).
+     * 
+     * <p>
+     * Whether the authentication dialog is to be started or continued depends on the (logical) state of the authentication dialog. If
+     * such dialog is currently in progress, a call to this method will continue it. If such dialog is not in progress a new one will be
+     * started. A new dialog can be forced to be started regardless of one being in progress or not by providing a value of 
+     * <code>true</code> for the {@link AuthenticationParameters#newAuthentication} parameter with this call.
+     * 
+	 * <p>
+	 * This method requires an {@link HttpServletRequest} and {@link HttpServletResponse} argument to be passed in, and
+	 * can therefore only be used in a valid Servlet context.
+	 * 
+	 * @param request The <code>HttpServletRequest</code> associated with the current web resource invocation.
+	 * @param response The <code>HttpServletResponse</code> associated with the given <code>HttpServletRequest</code>.
+	 * @param parameters The parameters that are provided along with a programmatic authentication request, for instance the credentials.
+	 * collected by the application for continuing an authentication dialog.
+	 * 
+	 * @return the state of the authentication mechanism after being triggered by this call
+	 */
     AuthenticationStatus authenticate(HttpServletRequest request, HttpServletResponse response, AuthenticationParameters parameters);
 
 }
