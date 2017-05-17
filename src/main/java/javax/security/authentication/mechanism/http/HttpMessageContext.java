@@ -40,7 +40,6 @@
 package javax.security.authentication.mechanism.http;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.security.AuthenticationStatus;
 import javax.security.CallerPrincipal;
@@ -50,6 +49,8 @@ import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.message.AuthException;
 import javax.security.auth.message.MessageInfo;
 import javax.security.identitystore.CredentialValidationResult;
+import javax.security.identitystore.CredentialValidationResult.Status;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -97,6 +98,15 @@ public interface HttpMessageContext {
      */
     void setRegisterSession(String callerName, List<String> groups);
 
+    /**
+     * Convenience method to clean the subject associated with this context.
+     * 
+     * <p>
+     * Cleaning this subject is done as defined by the Servlet Container Profile of JASPIC
+     * (JSR 196) for the ServerAuthModule#cleanSubject method and the 
+     * {@link HttpAuthenticationMechanism#cleanSubject(HttpServletRequest, HttpServletResponse, HttpMessageContext)} 
+     * method defined by this specification.
+     */
     void cleanClientSubject();
 
     /**
@@ -107,30 +117,21 @@ public interface HttpMessageContext {
     AuthenticationParameters getAuthParameters();
 
     /**
-     * Returns the handler that the runtime provided to auth context.
+     * Returns the low level JSR 196 handler that the runtime provided when creating this {@link HttpMessageContext},
+     * and which this context uses to communicate the authentication details to the runtime.
      * 
-     * @return the handler that the runtime provided to auth context.
+     * <p>
+     * <em>Note:</em> This is a low level object that most higher level code would not need to use directly.
+     * 
+     * @return the handler that the runtime provided to this context
      */
     CallbackHandler getHandler();
 
     /**
-     * Returns the module options that were set on the auth module to which this context belongs.
+     * Returns the the low level JSR 196 message info instance for the current request.
      * 
-     * @return the module options that were set on the auth module to which this context belongs.
-     */
-    Map<String, String> getModuleOptions();
-
-    /**
-     * Returns the named module option that was set on the auth module to which this context belongs.
-     * 
-     * @param key name of the module option
-     * 
-     * @return the named module option that was set on the auth module to which this context belongs, or null if no option with that name was set.
-     */
-    String getModuleOption(String key);
-
-    /**
-     * Returns the message info instance for the current request.
+     * <p>
+     * <em>Note:</em> This is a low level object that most higher level code would not need to use directly.
      * 
      * @return the message info instance for the current request.
      */
@@ -138,6 +139,9 @@ public interface HttpMessageContext {
 
     /**
      * Returns the subject for which authentication is to take place.
+     * 
+     * <p>
+     * <em>Note:</em> This is a low level object that most higher level code would not need to use directly.
      * 
      * @return the subject for which authentication is to take place.
      */
@@ -150,8 +154,22 @@ public interface HttpMessageContext {
      */
     HttpServletRequest getRequest();
     
+    /**
+     * Sets the request object.
+     * 
+     * @param request the request object to be set
+     * 
+     */
     void setRequest(HttpServletRequest request);
     
+    /**
+     * Sets the request object.
+     * 
+     * @param request the request object to be set.
+     * 
+     * @return the HttpMessageContext instance on which this method was called, useful for
+     * fluent style call call chains.
+     */
     HttpMessageContext withRequest(HttpServletRequest request);
 
     /**
@@ -161,10 +179,16 @@ public interface HttpMessageContext {
      */
     HttpServletResponse getResponse();
     
+    /**
+     * Set the response object.
+     * 
+     * @param response the response object to be set.
+     */
     void setResponse(HttpServletResponse response);
     
     /**
      * Sets the response status to SC_FOUND 302 (Found)
+     * 
      * <p>
      * As a convenience this method returns SEND_CONTINUE, so this method can be used in
      * one fluent return statement from an {@link HttpAuthenticationMechanism}
@@ -172,11 +196,25 @@ public interface HttpMessageContext {
      * @param location the location to redirect to
      * 
      * @return {@link AuthenticationStatus#SEND_CONTINUE}
+     * 
+     * @see HttpServletResponse#sendRedirect(String)
      */
     AuthenticationStatus redirect(String location);
     
+    /**
+     * Forwards to another resource (servlet, JSP file, or HTML file) on the server.
+     * 
+     * <p>
+     * As a convenience this method returns SEND_CONTINUE, so this method can be used in
+     * one fluent return statement from an {@link HttpAuthenticationMechanism}
+     * 
+     * @param path a String specifying the pathname to the resource.
+     * 
+     * @return {@link AuthenticationStatus#SEND_CONTINUE}
+     * 
+     * @see RequestDispatcher#forward(javax.servlet.ServletRequest, javax.servlet.ServletResponse)
+     */
     AuthenticationStatus forward(String path);
-    
 
     /**
      * Sets the response status to 401 (not found).
@@ -212,14 +250,53 @@ public interface HttpMessageContext {
      * one fluent return statement from an {@link HttpAuthenticationMechanism}
      * 
      * @param callername the caller name that will become the caller principal
-     * @param groups the roles associated with the caller principal
+     * @param groups the groups associated with the caller principal
      * @return {@link AuthenticationStatus#SUCCESS}
      *
      */
     AuthenticationStatus notifyContainerAboutLogin(String callername, List<String> groups);
     
-    AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, List<String> roles);
+    /**
+     * Asks the container to register the given caller principal and groups in order to make
+     * them available to the application for use with {@link HttpServletRequest#isUserInRole(String)} etc.
+     *
+     * <p>
+     * Note that after this call returned, the authenticated identity will not be immediately active. This
+     * will only take place (should no errors occur) after the authentication mechanism
+     * in which this call takes place returns control back to the container (runtime).
+     * 
+     * <p>
+     * As a convenience this method returns SUCCESS, so this method can be used in
+     * one fluent return statement from an {@link HttpAuthenticationMechanism}
+     * 
+     * @param callerPrincipal the CallerPrincipal that will become the caller principal
+     * @param groups the groups associated with the caller principal
+     * @return {@link AuthenticationStatus#SUCCESS}
+     *
+     */
+    AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, List<String> groups);
     
+    /**
+     * Convenience method intended to pass the <code>CredentialValidationResult</code> result of an 
+     * identity store directly on to the container.
+     * 
+     * <p>
+     * If the outcome from the given {@link CredentialValidationResult#getStatus()} equals
+     * {@link Status#VALID}, the {@link CallerPrincipal} and groups are obtained from the
+     * <code>CredentialValidationResult</code> and passed into 
+     * {@link HttpMessageContext#notifyContainerAboutLogin(CallerPrincipal, List)}.
+     * 
+     * <p>
+     * If the outcome from the given {@link CredentialValidationResult#getStatus()} is not 
+     * equal to {@link Status#VALID} a failure result is returned.
+     * 
+     * @param result a CredentialValidationResult which is inspected for its status and from which the principal and groups 
+     * are taken.
+     * 
+     * @return {@link AuthenticationStatus#SUCCESS} if {@link CredentialValidationResult#getStatus()} 
+     * equals {@link Status#VALID} otherwise {@link AuthenticationStatus#SEND_FAILURE}
+     *
+     */
     AuthenticationStatus notifyContainerAboutLogin(CredentialValidationResult result) throws AuthException;
 
     /**

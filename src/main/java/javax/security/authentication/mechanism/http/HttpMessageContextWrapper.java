@@ -108,16 +108,6 @@ public class HttpMessageContextWrapper implements HttpMessageContext {
     }
 
     @Override
-    public Map<String, String> getModuleOptions() {
-        return getWrapped().getModuleOptions();
-    }
-
-    @Override
-    public String getModuleOption(String key) {
-        return getWrapped().getModuleOption(key);
-    }
-
-    @Override
     public MessageInfo getMessageInfo() {
         return getWrapped().getMessageInfo();
     }
