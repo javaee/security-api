@@ -74,7 +74,7 @@ public interface HttpMessageContext {
 
     /**
      * Checks if the current call to an authentication mechanism is the result from the 
-     * application calling {@link SecurityContext#authenticate(HttpServletResponse, AuthenticationParameters)}.
+     * application calling {@link SecurityContext#authenticate(HttpServletRequest, HttpServletResponse, AuthenticationParameters)}
      * <p>
      * If SecurityContext#authenticate was not called, the authentication mechanism may have been invoked by the 
      * container at the start of a request.
