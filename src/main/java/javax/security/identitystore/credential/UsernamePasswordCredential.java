@@ -90,7 +90,6 @@ public class UsernamePasswordCredential extends AbstractClearableCredential {
         password.clear();
     }
 
-    @Override
     public String getCaller() {
         return caller;
     }

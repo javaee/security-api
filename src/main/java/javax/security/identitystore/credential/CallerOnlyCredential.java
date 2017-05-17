@@ -60,7 +60,6 @@ public class CallerOnlyCredential implements Credential {
         this.caller = caller;
     }
     
-    @Override
     public String getCaller() {
         return caller;
     }
