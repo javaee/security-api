@@ -56,6 +56,5 @@ public interface SecurityContext {
 	boolean hasAccessToWebResource(String resource, String... methods);
     
     AuthenticationStatus authenticate(HttpServletRequest request, HttpServletResponse response, AuthenticationParameters parameters);
-    AuthenticationStatus authenticate(HttpServletResponse response, AuthenticationParameters parameters);
 
 }
