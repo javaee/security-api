@@ -111,7 +111,7 @@ public interface SecurityContext {
 	List<String> getAllDeclaredCallerRoles();
 	
 	/**
-	 * Checks whether the caller has access to the provided "web resource" using the GET HTTP method, 
+	 * Checks whether the caller has access to the provided "web resources" using the GET HTTP method, 
 	 * such as specified by section 13.8 of the Servlet specification, and the JACC specification, 
 	 * specifically the {@link WebResourcePermission} type.
 	 * 
@@ -119,13 +119,13 @@ public interface SecurityContext {
 	 * A caller has access if the web resource is either not protected (constrained), or when it is protected by a role
 	 * and the caller is in that role.
 	 * 
-	 * @param resource the name of the web resource to test access for. This is a <code>URLPatternSpec</code> that 
-	 * identifies the application specific web resources to which the permission pertains. For a full specification of this
-	 * pattern see {@link WebResourcePermission#WebResourcePermission(String, String)}.
+	 * @param urlPatterns the url patterns for the web resource or resources to test access for. 
+	 * This is a <code>URLPatternSpec</code> that identifies the application specific web resources to which the 
+	 * permission pertains. For a full specification of this pattern see {@link WebResourcePermission#WebResourcePermission(String, String)}.
      * 
 	 * @return <code>true</code> if the caller has access to the web resource, <code>false</code> otherwise. 
 	 */
-	boolean hasAccessToWebResource(String resource);
+	boolean hasAccessToWebResource(String urlPatterns);
 	
 	/**
      * Checks whether the caller has access to the provided "web resource" using the given methods, 
@@ -134,16 +134,24 @@ public interface SecurityContext {
      * 
      * <p>
      * A caller has access if the web resource is either not protected (constrained), or when it is protected by a role
-     * and the caller is in that role.
+     * and the caller is in that role. If the caller is not authenticated and the web resource is protected, this returns
+     * false.
      * 
-     * @param resource the name of the web resource to test access for. This is a <code>URLPatternSpec</code> that 
-     * identifies the application specific web resources to which the permission pertains. For a full specification of this
-     * pattern see {@link WebResourcePermission#WebResourcePermission(String, String)}.
-     * @param methods one or more methods to check for whether the caller has access to the web resource using one of those methods.
+     * <p>
+     * While this method concerns web resources, it is explicitly allowed to be called by every other container in Java EE
+     * next to the web container. If there are no web resources at all present in the application this method must return false.
+     * 
+     * @param urlPatterns the url patterns for the web resource or resources to test access for. 
+     * This is a <code>URLPatternSpec</code> that identifies the application specific web resources to which the 
+     * permission pertains. For a full specification of this pattern see {@link WebResourcePermission#WebResourcePermission(String, String)}, 
+     * for the specification of an individual url pattern see Section 11.2 of the Servlet Specification.
+     * 
+     * @param methods zero or more methods to check for whether the caller has access to the web resource using one of those methods. 
+     * If no method is specified, GET is assumed.
      * 
      * @return <code>true</code> if the caller has access to the web resource using one of the given methods, <code>false</code> otherwise. 
      */
-	boolean hasAccessToWebResource(String resource, String... methods);
+	boolean hasCallerAccessToWebResource(String urlPatterns, String... methods);
     
 	/**
 	 * Signal to the container (programmatically trigger) that it should start or continue a web/HTTP based authentication dialog with 
