@@ -132,7 +132,7 @@ public class CredentialValidationResult {
     public CredentialValidationResult(CallerPrincipal callerPrincipal, Set<String> groups) {
         this(null, callerPrincipal, null, groups);
     }
-    
+
     /**
      * Constructor for a VALID result.
      *
@@ -142,9 +142,9 @@ public class CredentialValidationResult {
      * @param groups Groups associated with the caller from the identity store
      */
     public CredentialValidationResult(String storeId, String callerName, String callerUniqueId, Set<String> groups) {
-    	this(storeId, new CallerPrincipal(callerName), callerUniqueId, groups);
+        this(storeId, new CallerPrincipal(callerName), callerUniqueId, groups);
     }
-    
+
     /**
      * Constructor for a VALID result.
      *
@@ -154,9 +154,9 @@ public class CredentialValidationResult {
      * @param groups Groups associated with the caller from the identity store
      */
     public CredentialValidationResult(String storeId, CallerPrincipal callerPrincipal, String callerUniqueId, Set<String> groups) {
-    	this(VALID, storeId, callerPrincipal, callerUniqueId, groups);
+        this(VALID, storeId, callerPrincipal, callerUniqueId, groups);
     }
-    
+
     /**
      * Private constructor.
      *
@@ -167,20 +167,20 @@ public class CredentialValidationResult {
      * @param groups Groups associated with the caller from the identity store
      */
     private CredentialValidationResult(Status status, String storeId,
-    		CallerPrincipal callerPrincipal, String callerUniqueId, Set<String> groups) {
-    	
+            CallerPrincipal callerPrincipal, String callerUniqueId, Set<String> groups) {
+
         if (status != VALID && (storeId != null || callerPrincipal != null || callerUniqueId != null || groups != null)) {
             throw new IllegalArgumentException("Bad status");
         }
-    	if (status == VALID && (callerPrincipal == null || callerPrincipal.getName().trim().isEmpty())) {
-    		throw new IllegalArgumentException("Null or empty CallerPrincipal");
-    	}
-    	
-    	this.status = VALID;
-    	this.storeId = storeId;
-    	this.callerPrincipal = callerPrincipal;
-    	this.callerUniqueId = callerUniqueId;
-    	this.groups = groups != null ? unmodifiableSet(new HashSet<String>(groups)) : emptySet();
+        if (status == VALID && (callerPrincipal == null || callerPrincipal.getName().trim().isEmpty())) {
+            throw new IllegalArgumentException("Null or empty CallerPrincipal");
+        }
+
+        this.status = VALID;
+        this.storeId = storeId;
+        this.callerPrincipal = callerPrincipal;
+        this.callerUniqueId = callerUniqueId;
+        this.groups = groups != null ? unmodifiableSet(new HashSet<String>(groups)) : emptySet();
     }
 
     /**
@@ -191,14 +191,14 @@ public class CredentialValidationResult {
     public Status getStatus() {
         return status;
     }
-    
+
     /**
      * Return the unique ID of the identity store used to validate the credentials.
      * 
      * @return String identifying the external store used to validate credentials.
      */
     public String getIdentityStoreId() {
-    	return storeId;
+        return storeId;
     }
 
     /**
@@ -209,7 +209,7 @@ public class CredentialValidationResult {
     public CallerPrincipal getCallerPrincipal() {
         return callerPrincipal;
     }
-    
+
     /**
      * Return a string that uniquely identifies this caller within the identity store
      * (since the Principal name used may not be unique).
@@ -217,7 +217,7 @@ public class CredentialValidationResult {
      * @return Caller's unique identifier.
      */
     public String getCallerUniqueId() {
-    	return callerUniqueId;
+        return callerUniqueId;
     }
 
     /**
