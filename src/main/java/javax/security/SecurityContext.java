@@ -151,7 +151,7 @@ public interface SecurityContext {
      * 
      * @return <code>true</code> if the caller has access to the web resource using one of the given methods, <code>false</code> otherwise. 
      */
-	boolean hasCallerAccessToWebResource(String urlPatterns, String... methods);
+	boolean hasAccessToWebResource(String urlPatterns, String... methods);
     
 	/**
 	 * Signal to the container (programmatically trigger) that it should start or continue a web/HTTP based authentication dialog with 
