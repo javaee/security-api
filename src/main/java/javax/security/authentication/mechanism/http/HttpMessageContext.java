@@ -39,7 +39,7 @@
  */
 package javax.security.authentication.mechanism.http;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.security.AuthenticationStatus;
 import javax.security.CallerPrincipal;
@@ -96,7 +96,7 @@ public interface HttpMessageContext {
      * @param callerName the caller name for which authentication should be be remembered
      * @param groups the groups for which authentication should be remembered.
      */
-    void setRegisterSession(String callerName, List<String> groups);
+    void setRegisterSession(String callerName, Set<String> groups);
 
     /**
      * Convenience method to clean the subject associated with this context.
@@ -254,7 +254,7 @@ public interface HttpMessageContext {
      * @return {@link AuthenticationStatus#SUCCESS}
      *
      */
-    AuthenticationStatus notifyContainerAboutLogin(String callername, List<String> groups);
+    AuthenticationStatus notifyContainerAboutLogin(String callername, Set<String> groups);
     
     /**
      * Asks the container to register the given caller principal and groups in order to make
@@ -274,7 +274,7 @@ public interface HttpMessageContext {
      * @return {@link AuthenticationStatus#SUCCESS}
      *
      */
-    AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, List<String> groups);
+    AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, Set<String> groups);
     
     /**
      * Convenience method intended to pass the <code>CredentialValidationResult</code> result of an 
@@ -284,7 +284,7 @@ public interface HttpMessageContext {
      * If the outcome from the given {@link CredentialValidationResult#getStatus()} equals
      * {@link Status#VALID}, the {@link CallerPrincipal} and groups are obtained from the
      * <code>CredentialValidationResult</code> and passed into 
-     * {@link HttpMessageContext#notifyContainerAboutLogin(CallerPrincipal, List)}.
+     * {@link HttpMessageContext#notifyContainerAboutLogin(CallerPrincipal, Set)}.
      * 
      * <p>
      * If the outcome from the given {@link CredentialValidationResult#getStatus()} is not 
@@ -316,6 +316,6 @@ public interface HttpMessageContext {
     
     CallerPrincipal getCallerPrincipal();
 
-    List<String> getGroups();
+    Set<String> getGroups();
 
 }

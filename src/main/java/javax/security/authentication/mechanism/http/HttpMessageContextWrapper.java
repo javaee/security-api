@@ -39,7 +39,7 @@
  */
 package javax.security.authentication.mechanism.http;
 
-import java.util.List;
+import java.util.Set;
 import java.util.Map;
 
 import javax.security.AuthenticationStatus;
@@ -88,7 +88,7 @@ public class HttpMessageContextWrapper implements HttpMessageContext {
     }
 
     @Override
-    public void setRegisterSession(String callerName, List<String> groups) {
+    public void setRegisterSession(String callerName, Set<String> groups) {
         getWrapped().setRegisterSession(callerName, groups);
     }
 
@@ -163,12 +163,12 @@ public class HttpMessageContextWrapper implements HttpMessageContext {
     }
 
     @Override
-    public AuthenticationStatus notifyContainerAboutLogin(String username, List<String> roles) {
+    public AuthenticationStatus notifyContainerAboutLogin(String username, Set<String> roles) {
         return getWrapped().notifyContainerAboutLogin(username, roles);
     }
 
     @Override
-    public AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, List<String> roles) {
+    public AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, Set<String> roles) {
         return getWrapped().notifyContainerAboutLogin(callerPrincipal, roles);
     }
 
@@ -188,7 +188,7 @@ public class HttpMessageContextWrapper implements HttpMessageContext {
     }
 
     @Override
-    public List<String> getGroups() {
+    public Set<String> getGroups() {
         return getWrapped().getGroups();
     }
     

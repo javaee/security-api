@@ -13,7 +13,7 @@
 
     <groupId>javax.security</groupId>
     <artifactId>javax.security-api</artifactId>
-    <version>1.0-m03-SNAPSHOT</version>
+    <version>1.0-m04-prd</version>
     <packaging>bundle</packaging>
 
     <name>Java EE Security API</name>

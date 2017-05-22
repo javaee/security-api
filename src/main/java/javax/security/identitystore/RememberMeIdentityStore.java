@@ -39,7 +39,7 @@
  */
 package javax.security.identitystore;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.security.CallerPrincipal;
 import javax.security.auth.message.module.ServerAuthModule;
@@ -82,7 +82,7 @@ public interface RememberMeIdentityStore {
      * @param groups the groups the principal is in
      * @return a token that can be used to get the principal and groups back at a later moment.
      */
-    String generateLoginToken(CallerPrincipal callerPrincipal, List<String> groups);
+    String generateLoginToken(CallerPrincipal callerPrincipal, Set<String> groups);
     
     /**
      * Dissociates the principal and groups that were associated with the token before

@@ -40,9 +40,7 @@
 package javax.security;
 
 import java.security.Principal;
-import java.util.List;
 
-import javax.annotation.security.DeclareRoles;
 import javax.ejb.SessionContext;
 import javax.security.authentication.mechanism.http.AuthenticationParameters;
 import javax.security.authentication.mechanism.http.HttpAuthenticationMechanism;
@@ -96,20 +94,7 @@ public interface SecurityContext {
 	 * is not in the given role.
 	 */
 	boolean isCallerInRole(String role);
-	
-	/**
-	 *  A list of all static (application) roles that the authenticated caller is in or the empty list if the caller is either not
-	 *  authenticated or is not in any role.
-	 *  
-	 *  <p>
-	 *  A static role is a role that is declared upfront in the application, for example via the {@link DeclareRoles}
-	 *  annotation, and is discovered during startup. 
-	 *  
-	 * @return A list of all static roles the current caller is in, or the empty list if that caller is not authenticated or has
-	 * no roles.
-	 */
-	List<String> getAllDeclaredCallerRoles();
-	
+
 	/**
 	 * Checks whether the caller has access to the provided "web resource" using the GET HTTP method, 
 	 * such as specified by section 13.8 of the Servlet specification, and the JACC specification, 

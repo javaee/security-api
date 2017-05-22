@@ -39,14 +39,14 @@
  */
 package javax.security.identitystore;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.emptySet;
+import static java.util.Collections.unmodifiableSet;
 import static javax.security.identitystore.CredentialValidationResult.Status.INVALID;
 import static javax.security.identitystore.CredentialValidationResult.Status.NOT_VALIDATED;
 import static javax.security.identitystore.CredentialValidationResult.Status.VALID;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.security.CallerPrincipal;
 import javax.security.identitystore.credential.Credential;
@@ -62,9 +62,11 @@ public class CredentialValidationResult {
     public static final CredentialValidationResult INVALID_RESULT = new CredentialValidationResult(INVALID);
     public static final CredentialValidationResult NOT_VALIDATED_RESULT = new CredentialValidationResult(NOT_VALIDATED);
 
-    private final CallerPrincipal callerPrincipal;
     private final Status status;
-    private final List<String> groups;
+    private final String storeId;
+    private final String callerUniqueId;
+    private final CallerPrincipal callerPrincipal;
+    private final Set<String> groups;
 
     public enum Status {
         /**
@@ -82,15 +84,19 @@ public class CredentialValidationResult {
         VALID
     };
 
+    /**
+     * Constructor for any result other than VALID.
+     * Used only internally to construct the static
+     * status instances.
+     * 
+     * @param status
+     */
     private CredentialValidationResult(Status status) {
-        this(status, null, null);
-        if (VALID == status) {
-            throw new IllegalArgumentException("status");
-        }
+        this(status, null, null, null, null);
     }
 
     /**
-     * Constructor for a VALID result
+     * Constructor for a VALID result.
      *
      * @param callerName Name of the validated caller
      */
@@ -99,56 +105,82 @@ public class CredentialValidationResult {
     }
 
     /**
-     * Constructor for a VALID result
+     * Constructor for a VALID result.
      *
-     * @param callerPrincipal Validated caller
+     * @param callerPrincipal CallerPrincipal of validated caller
      */
     public CredentialValidationResult(CallerPrincipal callerPrincipal) {
         this(callerPrincipal, null);
     }
 
     /**
-     * Constructor for a VALID result
+     * Constructor for a VALID result.
      *
      * @param callerName Name of the validated caller
      * @param groups Groups associated with the caller from the identity store
      */
-    public CredentialValidationResult(String callerName, List<String> groups) {
+    public CredentialValidationResult(String callerName, Set<String> groups) {
         this(new CallerPrincipal(callerName), groups);
     }
 
     /**
-     * Constructor for a VALID result
+     * Constructor for a VALID result.
      *
-     * @param callerPrincipal Validated caller
+     * @param callerPrincipal CallerPrincipal of validated caller
      * @param groups Groups associated with the caller from the identity store
      */
-    public CredentialValidationResult(CallerPrincipal callerPrincipal, List<String> groups) {
-        this(VALID, callerPrincipal, groups);
+    public CredentialValidationResult(CallerPrincipal callerPrincipal, Set<String> groups) {
+        this(null, callerPrincipal, null, groups);
     }
-
+    
     /**
-     * Constructor
+     * Constructor for a VALID result.
      *
-     * @param status Validation status
-     * @param callerPrincipal Validated caller
+     * @param storeId Identity store unique ID
+     * @param callerName Name of the validated caller
+     * @param callerUniqueId Caller's unique identifier from the identity store
      * @param groups Groups associated with the caller from the identity store
      */
-    private CredentialValidationResult(Status status, CallerPrincipal callerPrincipal, List<String> groups) {
-
-        if (status == null) {
-            throw new NullPointerException("status");
+    public CredentialValidationResult(String storeId, String callerName, String callerUniqueId, Set<String> groups) {
+    	this(storeId, new CallerPrincipal(callerName), callerUniqueId, groups);
+    }
+    
+    /**
+     * Constructor for a VALID result.
+     *
+     * @param storeId Identity store unique ID
+     * @param callerPrincipal CallerPrincipal of validated caller
+     * @param callerUniqueId Caller's unique identifier from the identity store
+     * @param groups Groups associated with the caller from the identity store
+     */
+    public CredentialValidationResult(String storeId, CallerPrincipal callerPrincipal, String callerUniqueId, Set<String> groups) {
+    	this(VALID, storeId, callerPrincipal, callerUniqueId, groups);
+    }
+    
+    /**
+     * Private constructor.
+     *
+     * @param status The result status
+     * @param storeId Identity store unique ID
+     * @param callerPrincipal CallerPrincipal of validated caller
+     * @param callerUniqueId Caller's unique identifier from the identity store
+     * @param groups Groups associated with the caller from the identity store
+     */
+    private CredentialValidationResult(Status status, String storeId,
+    		CallerPrincipal callerPrincipal, String callerUniqueId, Set<String> groups) {
+    	
+        if (status != VALID && (storeId != null || callerPrincipal != null || callerUniqueId != null || groups != null)) {
+            throw new IllegalArgumentException("Bad status");
         }
-
-        this.status = status;
-
-        if (status == VALID) {
-            this.callerPrincipal = callerPrincipal;
-            this.groups = groups != null ? unmodifiableList(new ArrayList<>(groups)) : emptyList();
-        } else {
-            this.callerPrincipal = null;
-            this.groups = emptyList();
-        }
+    	if (status == VALID && (callerPrincipal == null || callerPrincipal.getName().trim().isEmpty())) {
+    		throw new IllegalArgumentException("Null or empty CallerPrincipal");
+    	}
+    	
+    	this.status = VALID;
+    	this.storeId = storeId;
+    	this.callerPrincipal = callerPrincipal;
+    	this.callerUniqueId = callerUniqueId;
+    	this.groups = groups != null ? unmodifiableSet(new HashSet<String>(groups)) : emptySet();
     }
 
     /**
@@ -159,19 +191,43 @@ public class CredentialValidationResult {
     public Status getStatus() {
         return status;
     }
-
-    public CallerPrincipal getCallerPrincipal() {
-        return callerPrincipal;
+    
+    /**
+     * Return the unique ID of the identity store used to validate the credentials.
+     * 
+     * @return String identifying the external store used to validate credentials.
+     */
+    public String getIdentityStoreId() {
+    	return storeId;
     }
 
     /**
-     * Determines the list of groups that the specified Caller is in, based on
+     * Return the CallerPrincipal for the validated credential.
+     * 
+     * @return The CallerPrincipal.
+     */
+    public CallerPrincipal getCallerPrincipal() {
+        return callerPrincipal;
+    }
+    
+    /**
+     * Return a string that uniquely identifies this caller within the identity store
+     * (since the Principal name used may not be unique).
+     * 
+     * @return Caller's unique identifier.
+     */
+    public String getCallerUniqueId() {
+    	return callerUniqueId;
+    }
+
+    /**
+     * Determines the set of groups that the specified Caller is in, based on
      * the associated identity store.
      *
-     * @return The list of groups that the specified Caller is in, empty if
+     * @return The set of groups that the specified Caller is in, or empty if
      * none.
      */
-    public List<String> getCallerGroups() {
+    public Set<String> getCallerGroups() {
         return groups;
     }
 
