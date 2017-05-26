@@ -176,7 +176,7 @@ public class CredentialValidationResult {
             throw new IllegalArgumentException("Null or empty CallerPrincipal");
         }
 
-        this.status = VALID;
+        this.status = status;
         this.storeId = storeId;
         this.callerPrincipal = callerPrincipal;
         this.callerUniqueId = callerUniqueId;
