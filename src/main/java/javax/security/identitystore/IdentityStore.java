@@ -123,7 +123,7 @@ public class ExampleIdentityStore implements IdentityStore {
     /**
      * Determines the type of validation the IdentityStore should be used for. 
      * By default, its used for credential validation AND providing groups.
-     * @return Type of validation.
+     * @return Inmutable set of validation types this identity store will perform.
      */
     default Set<ValidationType> validationTypes() {
         return DEFAULT_VALIDATION_TYPES;
