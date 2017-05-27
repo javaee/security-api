@@ -54,7 +54,7 @@ import javax.servlet.http.HttpServletResponse;
  * used by application code to query and interact with the Java EE Security API.
  * 
  * <p>
- * Unless otherwise indicated, this type must be usable in all Java EE containers, specifically the Servlet
+ * Unless otherwise indicated, this type must be usable in all Java EE containers, including the Servlet
  * and EJB containers.
  */
 public interface SecurityContext {
