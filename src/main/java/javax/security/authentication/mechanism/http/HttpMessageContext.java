@@ -62,7 +62,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface HttpMessageContext {
 
     /**
-     * Checks if the current request is to a protected resource or not. A protected resource
+     * Checks if the currently requested resource is protected or not. A protected resource
      * is a resource (e.g. a Servlet, JSF page, JSP page etc) for which a constraint has been defined
      * in e.g. <code>web.xml</code>.
      * 
@@ -82,7 +82,7 @@ public interface HttpMessageContext {
     boolean isAuthenticationRequest();
 
     /**
-     * Checks if during the current request code has asked the runtime to register an authentication session.
+     * Check if the runtime has been asked to register an authentication session duing the current request.
      * 
      * @return true if code has asked to register an authentication session, false otherwise.
      */
@@ -217,7 +217,7 @@ public interface HttpMessageContext {
     AuthenticationStatus forward(String path);
 
     /**
-     * Sets the response status to 401 (not found).
+     * Sets the response status to 401 (unauthorized).
      * <p>
      * As a convenience this method returns SEND_FAILURE, so this method can be used in
      * one fluent return statement from an {@link HttpAuthenticationMechanism}
@@ -238,7 +238,7 @@ public interface HttpMessageContext {
 
     /**
      * Asks the container to register the given caller name and groups in order to make
-     * them available to the application for use with {@link HttpServletRequest#isUserInRole(String)} etc.
+     * them available to the application for use with {@link SecurityContext#isCallerInRole(String)} etc.
      *
      * <p>
      * Note that after this call returned, the authenticated identity will not be immediately active. This
@@ -258,7 +258,7 @@ public interface HttpMessageContext {
     
     /**
      * Asks the container to register the given caller principal and groups in order to make
-     * them available to the application for use with {@link HttpServletRequest#isUserInRole(String)} etc.
+     * them available to the application for use with {@link SecurityContext#isCallerInRole(String)} etc.
      *
      * <p>
      * Note that after this call returned, the authenticated identity will not be immediately active. This
