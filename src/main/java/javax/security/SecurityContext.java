@@ -54,22 +54,20 @@ import javax.servlet.http.HttpServletResponse;
  * used by application code to query and interact with the Java EE Security API.
  * 
  * <p>
- * Unless otherwise indicated, this type must be usable in all Java EE containers, specifically the Servlet
+ * When running on a Java EE Application Server, and unless otherwise indicated, this type must be usable in all Java EE containers, including the Servlet
  * and EJB containers.
- * 
- * 
  */
 public interface SecurityContext {
 	
     /**
-     * Retrieve the <code>java.security.Principal</code> that represents the name of authenticated caller name, or null
+     * Retrieve the {@link Principal} that represents the name of authenticated caller name, or <code>null</code>
      * if the current caller is not authenticated.
      * 
      * <p>
      * The Principal can be downcasted to the exact Principal type that was set by the {@link HttpAuthenticationMechanism} 
      * (possibly via an {@link IdentityStore}) or a JASPIC ServerAuthModule.
      * 
-     * @return Principal representing the name of the current authenticated user, or null if not authenticated.
+     * @return Principal representing the name of the current authenticated user, or <code>null</code> if not authenticated.
      */
 	Principal getCallerPrincipal();
 	
