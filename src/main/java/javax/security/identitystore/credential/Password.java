@@ -59,9 +59,7 @@ public class Password {
      * @throws java.lang.NullPointerException Value is null
      */
     public Password(char[] value) {
-        if (null == value) {
-            throw new NullPointerException("Password value");
-        }
+        Objects.requireNonNull(value, "Password value may not be null");
 
         this.value = copyOf(value, value.length);
     }
