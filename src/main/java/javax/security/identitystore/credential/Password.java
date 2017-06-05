@@ -40,6 +40,7 @@
 package javax.security.identitystore.credential;
 
 import static java.util.Arrays.copyOf;
+import java.util.Objects;
 
 import java.util.Arrays;
 
