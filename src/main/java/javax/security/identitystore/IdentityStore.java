@@ -108,7 +108,7 @@ public class ExampleIdentityStore implements IdentityStore {
 		}
     }
     
-    default Set<String> getGroupsByCallerPrincipal(CallerPrincipal callerPrincipal) {
+    default Set<String> getCallerGroups(CredentialValidationResult validationResult) {
     	return emptySet();
     }
 

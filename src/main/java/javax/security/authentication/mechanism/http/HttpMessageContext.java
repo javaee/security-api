@@ -39,7 +39,7 @@
  */
 package javax.security.authentication.mechanism.http;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.security.AuthenticationStatus;
 import javax.security.CallerPrincipal;
@@ -62,7 +62,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface HttpMessageContext {
 
     /**
-     * Checks if the current request is to a protected resource or not. A protected resource
+     * Checks if the currently requested resource is protected or not. A protected resource
      * is a resource (e.g. a Servlet, JSF page, JSP page etc) for which a constraint has been defined
      * in e.g. <code>web.xml</code>.
      * 
@@ -82,7 +82,7 @@ public interface HttpMessageContext {
     boolean isAuthenticationRequest();
 
     /**
-     * Checks if during the current request code has asked the runtime to register an authentication session.
+     * Check if the runtime has been asked to register an authentication session duing the current request.
      * 
      * @return true if code has asked to register an authentication session, false otherwise.
      */
@@ -96,7 +96,7 @@ public interface HttpMessageContext {
      * @param callerName the caller name for which authentication should be be remembered
      * @param groups the groups for which authentication should be remembered.
      */
-    void setRegisterSession(String callerName, List<String> groups);
+    void setRegisterSession(String callerName, Set<String> groups);
 
     /**
      * Convenience method to clean the subject associated with this context.
@@ -217,7 +217,7 @@ public interface HttpMessageContext {
     AuthenticationStatus forward(String path);
 
     /**
-     * Sets the response status to 401 (not found).
+     * Sets the response status to 401 (unauthorized).
      * <p>
      * As a convenience this method returns SEND_FAILURE, so this method can be used in
      * one fluent return statement from an {@link HttpAuthenticationMechanism}
@@ -238,7 +238,7 @@ public interface HttpMessageContext {
 
     /**
      * Asks the container to register the given caller name and groups in order to make
-     * them available to the application for use with {@link HttpServletRequest#isUserInRole(String)} etc.
+     * them available to the application for use with {@link SecurityContext#isCallerInRole(String)} etc.
      *
      * <p>
      * Note that after this call returned, the authenticated identity will not be immediately active. This
@@ -254,11 +254,11 @@ public interface HttpMessageContext {
      * @return {@link AuthenticationStatus#SUCCESS}
      *
      */
-    AuthenticationStatus notifyContainerAboutLogin(String callername, List<String> groups);
+    AuthenticationStatus notifyContainerAboutLogin(String callername, Set<String> groups);
     
     /**
      * Asks the container to register the given caller principal and groups in order to make
-     * them available to the application for use with {@link HttpServletRequest#isUserInRole(String)} etc.
+     * them available to the application for use with {@link SecurityContext#isCallerInRole(String)} etc.
      *
      * <p>
      * Note that after this call returned, the authenticated identity will not be immediately active. This
@@ -274,7 +274,7 @@ public interface HttpMessageContext {
      * @return {@link AuthenticationStatus#SUCCESS}
      *
      */
-    AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, List<String> groups);
+    AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, Set<String> groups);
     
     /**
      * Convenience method intended to pass the <code>CredentialValidationResult</code> result of an 
@@ -284,7 +284,7 @@ public interface HttpMessageContext {
      * If the outcome from the given {@link CredentialValidationResult#getStatus()} equals
      * {@link Status#VALID}, the {@link CallerPrincipal} and groups are obtained from the
      * <code>CredentialValidationResult</code> and passed into 
-     * {@link HttpMessageContext#notifyContainerAboutLogin(CallerPrincipal, List)}.
+     * {@link HttpMessageContext#notifyContainerAboutLogin(CallerPrincipal, Set)}.
      * 
      * <p>
      * If the outcome from the given {@link CredentialValidationResult#getStatus()} is not 
@@ -316,6 +316,6 @@ public interface HttpMessageContext {
     
     CallerPrincipal getCallerPrincipal();
 
-    List<String> getGroups();
+    Set<String> getGroups();
 
 }
