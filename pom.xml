@@ -9,14 +9,32 @@
         <version>5</version>
     </parent>
 
-    <inceptionYear>2015</inceptionYear>
-
-    <groupId>javax.security</groupId>
-    <artifactId>javax.security-api</artifactId>
-    <version>1.0-m05-SNAPSHOT</version>
+    <groupId>javax.security.enterprise</groupId>
+    <artifactId>javax.security.enterprise-api</artifactId>
+    <version>1.0-b05-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <name>Java EE Security API</name>
+    <description>Security API for Java EE Applications</description>
+    <inceptionYear>2015</inceptionYear>
+
+    <properties>
+        <api_package>javax.security.enterprise</api_package>
+
+        <non_final>true</non_final>
+        <spec_version>0.0</spec_version>
+        <spec_impl_version>${project.version}</spec_impl_version>
+        <new_spec_version>1.0</new_spec_version>
+        <spec_build>05</spec_build>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <packages.export>!javax.security.auth.*,!javax.security.jacc.*,javax.security.*</packages.export>
+    </properties>
 
     <licenses>
         <license>
@@ -28,34 +46,12 @@
         </license>
     </licenses>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-
-        <api_package>javax.security</api_package>
-        <impl_namespace>org.glassfish.soteria</impl_namespace><!-- This thould not be in the API, is it still used? -->
-        <spec_version>1.0</spec_version>
-        <spec_impl_version>1.0-SNAPSHOT</spec_impl_version><!-- This thould not be in the API, is it still used? -->
-        <impl_version>1.0-SNAPSHOT</impl_version><!-- This thould not be in the API, is it still used? -->
-
-        <packages.export>!javax.security.auth.*,!javax.security.jacc.*,javax.security.*</packages.export>
-    </properties>
-
-    <distributionManagement>
-        <repository>
-            <id>bintray-javaee-security-spec-maven</id>
-            <name>javaee-security-spec-maven</name>
-            <url>https://api.bintray.com/maven/javaee-security-spec/maven/javax.security:javax.security-api/;publish=1</url>
-        </repository>
-        <snapshotRepository>
-			<id>bintray-snapshot</id>
-			<name>oss-jfrog-artifactory-snapshot</name>
-			<url>https://oss.jfrog.org/artifactory/oss-snapshot-local</url>
-		</snapshotRepository>
-    </distributionManagement>
+    <scm>
+        <connection>scm:git:https://github.com/javaee-security-spec/security-api.git</connection>
+        <developerConnection>scm:git:https://github.com/javaee-security-spec/security-api.git</developerConnection>
+        <url>https://github.com/javaee-security-spec/security-api</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <dependencies>
         <dependency>
@@ -97,11 +93,12 @@
                         <Extension-Name>${spec.extension.name}</Extension-Name>
                         <Implementation-Version>${spec.implementation.version}</Implementation-Version>
                         <Specification-Version>${spec.specification.version}</Specification-Version>
+                        <Specification-Vendor>Oracle Corporation</Specification-Vendor>
                         <Export-Package>${packages.export}</Export-Package>
                     </instructions>
                 </configuration>
             </plugin>
-            <!-- Configure the jar with the sources (or rather, convince Maven that 
+            <!-- Configure the jar with the sources (or rather, convince Maven that
             we want sources at all) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -116,7 +113,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Configure the jar with the javadoc (or rather, convince Maven that 
+            <!-- Configure the jar with the javadoc (or rather, convince Maven that
             we want javadoc at all) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -183,24 +180,45 @@
                 <version>1.2</version>
                 <configuration>
                     <spec>
-                        <nonFinal>false</nonFinal>
                         <jarType>api</jarType>
+                        <nonFinal>${non_final}</nonFinal>
+                        <apiPackage>${api_package}</apiPackage>
                         <specVersion>${spec_version}</specVersion>
                         <specImplVersion>${spec_impl_version}</specImplVersion>
-                        <apiPackage>${api_package}</apiPackage>
+                        <newSpecVersion>${new_spec_version}</newSpecVersion>
+                        <specBuild>${spec_build}</specBuild>
                     </spec>
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>set-spec-properties</goal>
-                            <!--<goal>check-module</goal>-->
+                            <goal>check-module</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-           
-            <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <arguments>${release.arguments}</arguments>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-gitexe</artifactId>
+                        <version>1.8.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!-- This plugin's configuration is used to store Eclipse m2e settings only.
+                 It has no influence on the Maven build itself. -->
             <plugin>
                 <groupId>org.eclipse.m2e</groupId>
                 <artifactId>lifecycle-mapping</artifactId>
@@ -238,41 +256,42 @@
             </plugin>
         </plugins>
         <pluginManagement>
-        	<plugins>
-        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-        		<plugin>
-        			<groupId>org.eclipse.m2e</groupId>
-        			<artifactId>lifecycle-mapping</artifactId>
-        			<version>1.0.0</version>
-        			<configuration>
-        				<lifecycleMappingMetadata>
-        					<pluginExecutions>
-        						<pluginExecution>
-        							<pluginExecutionFilter>
-        								<groupId>
-        									org.glassfish.build
-        								</groupId>
-        								<artifactId>
-        									spec-version-maven-plugin
-        								</artifactId>
-        								<versionRange>
-        									[1.2,)
-        								</versionRange>
-        								<goals>
-        									<goal>
-        										set-spec-properties
-        									</goal>
-        								</goals>
-        							</pluginExecutionFilter>
-        							<action>
-        								<ignore></ignore>
-        							</action>
-        						</pluginExecution>
-        					</pluginExecutions>
-        				</lifecycleMappingMetadata>
-        			</configuration>
-        		</plugin>
-        	</plugins>
+            <plugins>
+                <!-- This plugin's configuration is used to store Eclipse m2e settings only.
+                     It has no influence on the Maven build itself. -->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>
+                                            org.glassfish.build
+                                        </groupId>
+                                        <artifactId>
+                                            spec-version-maven-plugin
+                                        </artifactId>
+                                        <versionRange>
+                                            [1.2,)
+                                        </versionRange>
+                                        <goals>
+                                            <goal>
+                                                set-spec-properties
+                                            </goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <ignore></ignore>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+            </plugins>
         </pluginManagement>
     </build>
 
