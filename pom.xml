@@ -24,7 +24,7 @@
         <spec_version>0.0</spec_version>
         <spec_impl_version>${project.version}</spec_impl_version>
         <new_spec_version>1.0</new_spec_version>
-        <spec_build>06</spec_build>
+        <spec_build>07</spec_build>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
