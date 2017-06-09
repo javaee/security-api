@@ -37,19 +37,19 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security.identitystore;
+package javax.security.enterprise.identitystore;
 
 import static java.util.Collections.emptySet;
 import static java.util.Collections.unmodifiableSet;
-import static javax.security.identitystore.CredentialValidationResult.Status.INVALID;
-import static javax.security.identitystore.CredentialValidationResult.Status.NOT_VALIDATED;
-import static javax.security.identitystore.CredentialValidationResult.Status.VALID;
+import static javax.security.enterprise.identitystore.CredentialValidationResult.Status.INVALID;
+import static javax.security.enterprise.identitystore.CredentialValidationResult.Status.NOT_VALIDATED;
+import static javax.security.enterprise.identitystore.CredentialValidationResult.Status.VALID;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.security.CallerPrincipal;
-import javax.security.identitystore.credential.Credential;
+import javax.security.enterprise.CallerPrincipal;
+import javax.security.enterprise.credential.Credential;
 
 /**
  * <code>CredentialValidationResult</code> is the result from an attempt to

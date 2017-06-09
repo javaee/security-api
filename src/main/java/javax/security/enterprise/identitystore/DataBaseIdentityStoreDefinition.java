@@ -37,18 +37,18 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security.identitystore.annotation;
+package javax.security.enterprise.identitystore;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
-import static javax.security.identitystore.IdentityStore.ValidationType.PROVIDE_GROUPS;
-import static javax.security.identitystore.IdentityStore.ValidationType.VALIDATE;
+import static javax.security.enterprise.identitystore.IdentityStore.ValidationType.PROVIDE_GROUPS;
+import static javax.security.enterprise.identitystore.IdentityStore.ValidationType.VALIDATE;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import javax.security.identitystore.IdentityStore;
-import javax.security.identitystore.IdentityStore.ValidationType;
+import javax.security.enterprise.identitystore.IdentityStore;
+import javax.security.enterprise.identitystore.IdentityStore.ValidationType;
 
 /**
  * Annotation used to define a container provided {@link IdentityStore} that stores

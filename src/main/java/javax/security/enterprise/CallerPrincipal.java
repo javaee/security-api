@@ -37,7 +37,7 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security;
+package javax.security.enterprise;
 
 import java.security.Principal;
 

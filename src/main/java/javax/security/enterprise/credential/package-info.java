@@ -43,5 +43,5 @@
  *
  * @version 1.0
  */
-package javax.security.identitystore.credential;
+package javax.security.enterprise.credential;
 

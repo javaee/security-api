@@ -37,14 +37,14 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security;
+package javax.security.enterprise;
 
 import java.security.Principal;
 
 import javax.ejb.SessionContext;
-import javax.security.authentication.mechanism.http.AuthenticationParameters;
-import javax.security.authentication.mechanism.http.HttpAuthenticationMechanism;
-import javax.security.identitystore.IdentityStore;
+import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
+import javax.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
+import javax.security.enterprise.identitystore.IdentityStore;
 import javax.security.jacc.WebResourcePermission;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

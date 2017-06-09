@@ -37,22 +37,22 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security.identitystore;
+package javax.security.enterprise.identitystore;
 
 import static java.lang.invoke.MethodType.methodType;
 import static java.util.Collections.emptySet;
-import static javax.security.identitystore.CredentialValidationResult.NOT_VALIDATED_RESULT;
-import static javax.security.identitystore.IdentityStore.ValidationType.PROVIDE_GROUPS;
-import static javax.security.identitystore.IdentityStore.ValidationType.VALIDATE;
+import static javax.security.enterprise.identitystore.CredentialValidationResult.NOT_VALIDATED_RESULT;
+import static javax.security.enterprise.identitystore.IdentityStore.ValidationType.PROVIDE_GROUPS;
+import static javax.security.enterprise.identitystore.IdentityStore.ValidationType.VALIDATE;
 
 import java.lang.invoke.MethodHandles;
 import java.util.EnumSet;
 import java.util.Set;
 
-import javax.security.CallerPrincipal;
 import javax.security.auth.message.module.ServerAuthModule;
-import javax.security.authentication.mechanism.http.HttpAuthenticationMechanism;
-import javax.security.identitystore.credential.Credential;
+import javax.security.enterprise.CallerPrincipal;
+import javax.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
+import javax.security.enterprise.credential.Credential;
 
 /**
  * <code>IdentityStore</code> is a mechanism for validating a Caller's

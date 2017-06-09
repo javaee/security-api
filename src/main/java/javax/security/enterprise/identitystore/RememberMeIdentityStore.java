@@ -37,15 +37,15 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security.identitystore;
+package javax.security.enterprise.identitystore;
 
 import java.util.Set;
 
-import javax.security.CallerPrincipal;
 import javax.security.auth.message.module.ServerAuthModule;
-import javax.security.authentication.mechanism.http.annotation.RememberMe;
-import javax.security.authentication.mechanism.http.HttpAuthenticationMechanism;
-import javax.security.identitystore.credential.RememberMeCredential;
+import javax.security.enterprise.CallerPrincipal;
+import javax.security.enterprise.authentication.mechanism.http.RememberMe;
+import javax.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
+import javax.security.enterprise.credential.RememberMeCredential;
 
 /**
  * <code>RememberMeIdentityStore</code> is a mechanism for validating a caller's

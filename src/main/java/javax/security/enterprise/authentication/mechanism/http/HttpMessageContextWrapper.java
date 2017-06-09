@@ -37,18 +37,18 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security.authentication.mechanism.http;
+package javax.security.enterprise.authentication.mechanism.http;
 
 import java.util.Set;
 import java.util.Map;
 
-import javax.security.AuthenticationStatus;
-import javax.security.CallerPrincipal;
 import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.message.AuthException;
 import javax.security.auth.message.MessageInfo;
-import javax.security.identitystore.CredentialValidationResult;
+import javax.security.enterprise.AuthenticationStatus;
+import javax.security.enterprise.CallerPrincipal;
+import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

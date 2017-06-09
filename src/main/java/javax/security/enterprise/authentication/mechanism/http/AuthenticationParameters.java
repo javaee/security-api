@@ -37,11 +37,11 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security.authentication.mechanism.http;
+package javax.security.enterprise.authentication.mechanism.http;
 
-import javax.security.authentication.mechanism.http.annotation.RememberMe;
-import javax.security.identitystore.RememberMeIdentityStore;
-import javax.security.identitystore.credential.Credential;
+import javax.security.enterprise.authentication.mechanism.http.RememberMe;
+import javax.security.enterprise.identitystore.RememberMeIdentityStore;
+import javax.security.enterprise.credential.Credential;
 
 /**
  * Parameters that are provided along with an authentication request.

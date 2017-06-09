@@ -37,7 +37,7 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security.identitystore.credential;
+package javax.security.enterprise.credential;
 
 /**
  * Represents the credentials typically used by standard caller name/password authentication.

@@ -37,7 +37,7 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security.authentication.mechanism.http.annotation;
+package javax.security.enterprise.authentication.mechanism.http;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -50,9 +50,9 @@ import javax.el.ELProcessor;
 import javax.enterprise.util.Nonbinding;
 import javax.interceptor.InterceptorBinding;
 import javax.resource.spi.AuthenticationMechanism;
-import javax.security.authentication.mechanism.http.HttpMessageContext;
-import javax.security.identitystore.IdentityStore;
-import javax.security.identitystore.RememberMeIdentityStore;
+import javax.security.enterprise.authentication.mechanism.http.HttpMessageContext;
+import javax.security.enterprise.identitystore.IdentityStore;
+import javax.security.enterprise.identitystore.RememberMeIdentityStore;
 import javax.servlet.http.Cookie;
 
 /**

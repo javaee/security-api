@@ -37,9 +37,9 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security;
+package javax.security.enterprise;
 
-import javax.security.authentication.mechanism.http.HttpAuthenticationMechanism;
+import javax.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -48,7 +48,7 @@ import javax.servlet.http.HttpServletRequest;
  * of the authentication process.
  * 
  * <p>
- * For the result from {@link HttpAuthenticationMechanism#validateRequest(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.security.authentication.mechanism.http.HttpMessageContext)} 
+ * For the result from {@link HttpAuthenticationMechanism#validateRequest(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.security.enterprise.authentication.mechanism.http.HttpMessageContext)} 
  * an AuthenticationStatus must be transformed by the Java EE server into the corresponding JASPIC (JSR 196) AuthStatus
  * according to the following rules:
  * 
@@ -72,7 +72,7 @@ import javax.servlet.http.HttpServletRequest;
  * otherwise not.
  * 
  * <p>
- * The return value of {@link SecurityContext#authenticate(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.security.authentication.mechanism.http.AuthenticationParameters)}
+ * The return value of {@link SecurityContext#authenticate(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters)}
  * , which is also of type AuthenticationStatus, strongly relates to the outcome of the <code>HttpAuthenticationMechanism#validateRequest</code>
  * method as described above, but must be transformed by the Java EE server from the corresponding outcome of the
  * {@link HttpServletRequest#authenticate(javax.servlet.http.HttpServletResponse)} call as follows:

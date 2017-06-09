@@ -37,11 +37,11 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security.identitystore;
+package javax.security.enterprise.identitystore;
 
 import javax.resource.spi.AuthenticationMechanism;
 import javax.security.auth.message.module.ServerAuthModule;
-import javax.security.identitystore.credential.Credential;
+import javax.security.enterprise.credential.Credential;
 
 /**
  * <code>IdentityStoreHandler</code> is a mechanism for validating a Caller's

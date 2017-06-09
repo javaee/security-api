@@ -37,7 +37,7 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security.authentication.mechanism.http.annotation;
+package javax.security.enterprise.authentication.mechanism.http;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -47,7 +47,7 @@ import java.lang.annotation.Target;
 
 import javax.enterprise.util.Nonbinding;
 import javax.resource.spi.AuthenticationMechanism;
-import javax.security.SecurityContext;
+import javax.security.enterprise.SecurityContext;
 
 /**
  * Annotation used to define a container {@link AuthenticationMechanism} that implements
@@ -55,7 +55,7 @@ import javax.security.SecurityContext;
  * <p> 
  * Instead of posting back to a predefined action to continue the authentication dialog 
  * (Servlet spec 13.6.3 step 3), this variant depends on the application calling 
- * {@link SecurityContext#authenticate(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.security.authentication.mechanism.http.AuthenticationParameters)}
+ * {@link SecurityContext#authenticate(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters)}
  * 
  *
  */

@@ -32,7 +32,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <packages.export>!javax.security.auth.*,!javax.security.jacc.*,javax.security.*</packages.export>
+        <packages.export>javax.security.enterprise.*</packages.export>
     </properties>
 
     <licenses>
@@ -122,7 +122,7 @@
                     <javadocVersion>1.8</javadocVersion>
                     <notimestamp>true</notimestamp>
                     <splitindex>true</splitindex>
-                    <doctitle>Soteria API documentation</doctitle>
+                    <doctitle>${project.name} ${project.version}</doctitle>
                     <links>
                         <link>https://docs.oracle.com/javaee/7/api/</link>
                     </links>

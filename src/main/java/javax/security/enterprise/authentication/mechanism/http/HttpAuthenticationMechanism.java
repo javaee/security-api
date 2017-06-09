@@ -37,16 +37,16 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-package javax.security.authentication.mechanism.http;
+package javax.security.enterprise.authentication.mechanism.http;
 
-import static javax.security.AuthenticationStatus.SUCCESS;
+import static javax.security.enterprise.AuthenticationStatus.SUCCESS;
 
-import javax.security.AuthenticationStatus;
 import javax.security.auth.message.AuthException;
 import javax.security.auth.message.module.ServerAuthModule;
-import javax.security.authentication.mechanism.http.annotation.AutoApplySession;
-import javax.security.authentication.mechanism.http.annotation.RememberMe;
-import javax.security.identitystore.IdentityStore;
+import javax.security.enterprise.AuthenticationStatus;
+import javax.security.enterprise.authentication.mechanism.http.AutoApplySession;
+import javax.security.enterprise.authentication.mechanism.http.RememberMe;
+import javax.security.enterprise.identitystore.IdentityStore;
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -68,7 +68,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * <p>
  * Implementations of this class can notify the Servlet container about a succesful authentication by using the
- * {@link HttpMessageContext#notifyContainerAboutLogin(javax.security.CallerPrincipal, java.util.Set)} method.
+ * {@link HttpMessageContext#notifyContainerAboutLogin(javax.security.enterprise.CallerPrincipal, java.util.Set)} method.
  * 
  * <p>
  * Implementations are expected and encouraged to delegate the actual credential validation and/or retrieval of the
