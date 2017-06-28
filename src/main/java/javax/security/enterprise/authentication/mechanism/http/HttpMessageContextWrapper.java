@@ -153,8 +153,8 @@ public class HttpMessageContextWrapper implements HttpMessageContext {
     }
 
     @Override
-    public AuthenticationStatus responseUnAuthorized() {
-        return getWrapped().responseUnAuthorized();
+    public AuthenticationStatus responseUnauthorized() {
+        return getWrapped().responseUnauthorized();
     }
 
     @Override
