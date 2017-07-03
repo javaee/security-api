@@ -224,7 +224,7 @@ public interface HttpMessageContext {
      * 
      * @return {@link AuthenticationStatus#SEND_FAILURE}
      */
-    AuthenticationStatus responseUnAuthorized();
+    AuthenticationStatus responseUnauthorized();
 
     /**
      * Sets the response status to 404 (not found).
