@@ -60,7 +60,7 @@ import javax.security.enterprise.identitystore.IdentityStore.ValidationType;
  */
 @Retention(RUNTIME)
 @Target(TYPE)
-public @interface DataBaseIdentityStoreDefinition {
+public @interface DatabaseIdentityStoreDefinition {
 
     /**
      * Full JNDI name of the data source that provides access to the data base where the 
