@@ -40,21 +40,18 @@
 package javax.security.enterprise.identitystore;
 
 import static java.lang.annotation.ElementType.TYPE;
+import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.lang.annotation.Target;
+import javax.security.enterprise.identitystore.IdentityStore.ValidationType;
 import static javax.security.enterprise.identitystore.IdentityStore.ValidationType.PROVIDE_GROUPS;
 import static javax.security.enterprise.identitystore.IdentityStore.ValidationType.VALIDATE;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
-import javax.security.enterprise.identitystore.IdentityStore;
-import javax.security.enterprise.identitystore.IdentityStore.ValidationType;
-
 /**
- * Annotation used to define a container provided {@link IdentityStore} that stores
- * caller credentials and identity attributes in a relational database, and make that 
- * implementation available as an enabled CDI bean.
- * 
+ * Annotation used to define a container provided {@link IdentityStore} that
+ * stores caller credentials and identity attributes in a relational database,
+ * and make that implementation available as an enabled CDI bean.
+ *
  * @author Arjan Tijms
  *
  */
@@ -63,39 +60,42 @@ import javax.security.enterprise.identitystore.IdentityStore.ValidationType;
 public @interface DatabaseIdentityStoreDefinition {
 
     /**
-     * Full JNDI name of the data source that provides access to the data base where the 
-     * caller identities are stored. 
-     * 
+     * Full JNDI name of the data source that provides access to the data base
+     * where the caller identities are stored.
+     *
      * @return Full JNDI name of the data source
      */
-	String dataSourceLookup() default "java:comp/DefaultDataSource"; // default data source
-	
-	/**
-	 * SQL query to validate the {caller, password} pair. 
-	 * 
-	 * <p>
-	 * The name of the caller that is to be authenticated has to be set as the one and only placeholder. 
-	 * The (hashed) password should be in the first column of the result.
-	 * 
-	 * <p>
-	 * Example query:
-	 * <pre>
-	 * <code>
-	 * select password from caller where name = ?
-	 * </code>
-	 * </pre>
-	 * 
-	 * @return SQL query to validate
-	 */
-	String callerQuery();
-	
-	/**
-     * SQL query to retrieve the groups associated with the caller when authentication succeeds.
-     * 
+    String dataSourceLookup() default "java:comp/DefaultDataSource"; // default data source
+
+    /**
+     * SQL query to validate the {caller, password} pair.
+     *
      * <p>
-     * The name of the caller that has been authenticated has to be set as the one and only placeholder. 
-     * The group name should be in the first column of the result.
-     * 
+     * The name of the caller that is to be authenticated has to be set as the
+     * one and only placeholder. The (hashed) password should be in the first
+     * column of the result.
+     *
+     * <p>
+     * Example query:
+     * <pre>
+     * <code>
+     * select password from caller where name = ?
+     * </code>
+     * </pre>
+     *
+     * @return SQL query to validate
+     */
+    String callerQuery();
+
+    /**
+     * SQL query to retrieve the groups associated with the caller when
+     * authentication succeeds.
+     *
+     * <p>
+     * The name of the caller that has been authenticated has to be set as the
+     * one and only placeholder. The group name should be in the first column of
+     * the result.
+     *
      * <p>
      * Example query:
      * <pre>
@@ -103,35 +103,36 @@ public @interface DatabaseIdentityStoreDefinition {
      * select group_name from caller_groups where caller_name = ?
      * </code>
      * </pre>
-     * 
+     *
      * @return SQL query to retrieve the groups
      */
-	String groupsQuery();
-	
-	/**
-	 * Hash algorithm applied to plain text password for comparison with password
-	 * returned from {@link #groupsQuery()}.
-	 * 
-	 * @return Hash algorithm applied to plain text password
-	 */
-	String hashAlgorithm() default ""; // default no hash (for now) todo: make enum?
-	
-	/**
-	 * Encoding used for hash. TODO
-	 * 
-	 *  @return Encoding used for hash
-	 */
-	String hashEncoding() default ""; // default no encoding (for now) todo: make enum?
+    String groupsQuery();
 
-	/**
-	 * Determines the order in case multiple IdentityStores are found.
-	 * @return the priority.
-	 */
-	int priority() default 70;
+    /**
+     * Hash algorithm applied to plain text password for comparison with
+     * password returned from {@link #groupsQuery()}.
+     *
+     * @return Hash algorithm applied to plain text password
+     */
+    String hashAlgorithm() default ""; // default no hash (for now) todo: make enum?
 
-	/**
+    /**
+     * Encoding used for hash. TODO
+     *
+     * @return Encoding used for hash
+     */
+    String hashEncoding() default ""; // default no encoding (for now) todo: make enum?
+
+    /**
+     * Determines the order in case multiple IdentityStores are found.
+     *
+     * @return the priority.
+     */
+    int priority() default 70;
+
+    /**
      * Determines what the identity store is used for
-     * 
+     *
      * @return the type the identity store is used for
      */
     ValidationType[] useFor() default {VALIDATE, PROVIDE_GROUPS};
