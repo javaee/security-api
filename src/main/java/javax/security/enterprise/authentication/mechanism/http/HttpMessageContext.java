@@ -43,7 +43,6 @@ import java.util.Set;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
-import javax.security.auth.message.AuthException;
 import javax.security.auth.message.MessageInfo;
 import javax.security.enterprise.AuthenticationStatus;
 import javax.security.enterprise.CallerPrincipal;
@@ -297,7 +296,7 @@ public interface HttpMessageContext {
      * equals {@link Status#VALID} otherwise {@link AuthenticationStatus#SEND_FAILURE}
      *
      */
-    AuthenticationStatus notifyContainerAboutLogin(CredentialValidationResult result) throws AuthException;
+    AuthenticationStatus notifyContainerAboutLogin(CredentialValidationResult result);
 
     /**
      * Instructs the container to "do nothing".
