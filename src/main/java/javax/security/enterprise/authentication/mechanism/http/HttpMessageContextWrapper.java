@@ -39,13 +39,13 @@
  */
 package javax.security.enterprise.authentication.mechanism.http;
 
+import java.security.Principal;
 import java.util.Set;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.message.MessageInfo;
 import javax.security.enterprise.AuthenticationStatus;
-import javax.security.enterprise.CallerPrincipal;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -166,8 +166,8 @@ public class HttpMessageContextWrapper implements HttpMessageContext {
     }
 
     @Override
-    public AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, Set<String> roles) {
-        return getWrapped().notifyContainerAboutLogin(callerPrincipal, roles);
+    public AuthenticationStatus notifyContainerAboutLogin(Principal principal, Set<String> roles) {
+        return getWrapped().notifyContainerAboutLogin(principal, roles);
     }
 
     @Override
@@ -181,7 +181,7 @@ public class HttpMessageContextWrapper implements HttpMessageContext {
     }
 
     @Override
-    public CallerPrincipal getCallerPrincipal() {
+    public Principal getCallerPrincipal() {
         return getWrapped().getCallerPrincipal();
     }
 
