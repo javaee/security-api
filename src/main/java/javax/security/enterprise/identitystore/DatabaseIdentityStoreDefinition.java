@@ -82,7 +82,7 @@ public @interface DatabaseIdentityStoreDefinition {
      * Example query:
      * <pre>
      * <code>
-     * select password from caller where name = ?
+     * select password from callers where name = ?
      * </code>
      * </pre>
      *
@@ -120,14 +120,7 @@ public @interface DatabaseIdentityStoreDefinition {
      *
      * @return Hash algorithm applied to plain text password
      */
-    String hashAlgorithm() default ""; // default no hash (for now) todo: make enum?
-
-    /**
-     * Encoding used for hash. TODO
-     *
-     * @return Encoding used for hash
-     */
-    String hashEncoding() default ""; // default no encoding (for now) todo: make enum?
+    String hashAlgorithm() default "PBKDF2";
 
     /**
      * Determines the order in case multiple IdentityStores are found.
