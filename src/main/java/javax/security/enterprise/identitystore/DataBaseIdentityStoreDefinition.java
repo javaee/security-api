@@ -81,7 +81,7 @@ public @interface DataBaseIdentityStoreDefinition {
 	 * Example query:
 	 * <pre>
 	 * <code>
-	 * select password from caller where name = ?
+	 * select password from callers where name = ?
 	 * </code>
 	 * </pre>
 	 * 
