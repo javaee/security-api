@@ -71,7 +71,7 @@ public @interface DatabaseIdentityStoreDefinition {
      * SQL query to validate the {caller, password} pair.
      *
      * Only needed when {@link #useFor()} contains
-     * {@link ValidationType#PROVIDE_GROUPS}.
+     * {@link ValidationType#VALIDATE}.
      *
      * <p>
      * The name of the caller that is to be authenticated has to be set as the
