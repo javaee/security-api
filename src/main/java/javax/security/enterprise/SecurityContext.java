@@ -40,6 +40,7 @@
 package javax.security.enterprise;
 
 import java.security.Principal;
+import java.util.Set;
 
 import javax.ejb.SessionContext;
 import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
@@ -62,17 +63,27 @@ import javax.servlet.http.HttpServletResponse;
 public interface SecurityContext {
 	
     /**
-     * Retrieve the <code>java.security.Principal</code> that represents the name of authenticated caller name, or null
-     * if the current caller is not authenticated.
-     * 
-     * <p>
-     * The Principal can be downcasted to the exact Principal type that was set by the {@link HttpAuthenticationMechanism} 
-     * (possibly via an {@link IdentityStore}) or a JASPIC ServerAuthModule.
+     * Retrieve the platform-specific <code>java.security.Principal</code> that represents
+     * the name of authenticated caller, or null if the current caller is not authenticated.
      * 
      * @return Principal representing the name of the current authenticated user, or null if not authenticated.
      */
 	Principal getCallerPrincipal();
-	
+
+    /**
+     * Retrieve all Principals of the given type from the authenticated caller's Subject,
+     * or an empty set if the current caller is not authenticated, or if the specified type
+     * isn't found in the Subject.
+     * <p>
+     * This can be used to retrieve application-specific
+     * Principals when the platform's representation of the caller uses a different principal type.
+     * 
+     * @param pType Class object representing the type of Principal to return.
+     *
+     * @return Set of Principals of the given type, or an empty set.
+     */
+    <T extends Principal> Set<T> getPrincipalsByType(Class<T> pType);
+
 	/**
 	 * Checks whether the authenticated caller is included in the specified logical <em>application</em> "role". 
 	 * If the caller is not authenticated, this always returns <code>false</code>.
