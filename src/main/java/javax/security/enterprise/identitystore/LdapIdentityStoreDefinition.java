@@ -263,10 +263,26 @@ public @interface LdapIdentityStoreDefinition {
     int priority() default 80;
 
     /**
+     * Allow priority to be specified as an EL expression.
+     * If set, overrides any value set with priority.
+     * 
+     * @return the priority EL expression
+     */
+    String priorityExpression();
+
+    /**
      * Determines what the identity store is used for
      * 
      * @return the type the identity store is used for
      */
     ValidationType[] useFor() default {VALIDATE, PROVIDE_GROUPS};
+
+    /**
+     * Allow useFor to be specified as an EL expression.
+     * If set, overrides any value set with useFor.
+     * 
+     * @return the useFor EL expression
+     */
+    String useForExpression();
 
 }
