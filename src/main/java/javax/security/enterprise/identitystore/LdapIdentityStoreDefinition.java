@@ -115,7 +115,8 @@ public @interface LdapIdentityStoreDefinition {
      * <p>
      * This attribute will be used, with callerBaseDn, to construct user DNs for direct binding.
      * and to retrieve the caller's name when the person object is obtained via search. The value
-     * of this attribute is returned in the {@link CallerPrincipal} following a successful validation.
+     * of this attribute is returned in the {@link javax.security.enterprise.CallerPrincipal}
+     * following a successful validation.
      * <p>
      * The following gives an example in ldif format:
      * <pre>
