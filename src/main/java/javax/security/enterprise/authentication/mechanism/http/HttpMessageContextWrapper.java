@@ -40,11 +40,9 @@
 package javax.security.enterprise.authentication.mechanism.http;
 
 import java.util.Set;
-import java.util.Map;
 
 import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
-import javax.security.auth.message.AuthException;
 import javax.security.auth.message.MessageInfo;
 import javax.security.enterprise.AuthenticationStatus;
 import javax.security.enterprise.CallerPrincipal;
@@ -173,7 +171,7 @@ public class HttpMessageContextWrapper implements HttpMessageContext {
     }
 
     @Override
-    public AuthenticationStatus notifyContainerAboutLogin(CredentialValidationResult result) throws AuthException {
+    public AuthenticationStatus notifyContainerAboutLogin(CredentialValidationResult result) {
         return getWrapped().notifyContainerAboutLogin(result);
     }
 

@@ -41,11 +41,9 @@ package javax.security.enterprise.authentication.mechanism.http;
 
 import static javax.security.enterprise.AuthenticationStatus.SUCCESS;
 
-import javax.security.auth.message.AuthException;
 import javax.security.auth.message.module.ServerAuthModule;
+import javax.security.enterprise.AuthenticationException;
 import javax.security.enterprise.AuthenticationStatus;
-import javax.security.enterprise.authentication.mechanism.http.AutoApplySession;
-import javax.security.enterprise.authentication.mechanism.http.RememberMe;
 import javax.security.enterprise.identitystore.IdentityStore;
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServlet;
@@ -99,9 +97,9 @@ public interface HttpAuthenticationMechanism {
      * @param response contains the response that will be send to the client
      * @param httpMessageContext context for interacting with the container
      * @return the completion status of the processing performed by this method
-     * @throws AuthException when the processing failed
+     * @throws AuthenticationException when the processing failed
      */
-    AuthenticationStatus validateRequest(HttpServletRequest request, HttpServletResponse response, HttpMessageContext httpMessageContext) throws AuthException;
+    AuthenticationStatus validateRequest(HttpServletRequest request, HttpServletResponse response, HttpMessageContext httpMessageContext) throws AuthenticationException;
    
     /**
      * Secure the response, optionally.
@@ -118,9 +116,9 @@ public interface HttpAuthenticationMechanism {
      * @param response contains the response that will be send to the client
      * @param httpMessageContext context for interacting with the container
      * @return the completion status of the processing performed by this method
-     * @throws AuthException when the processing failed
+     * @throws AuthenticationException when the processing failed
      */
-    default AuthenticationStatus secureResponse(HttpServletRequest request, HttpServletResponse response, HttpMessageContext httpMessageContext) throws AuthException {
+    default AuthenticationStatus secureResponse(HttpServletRequest request, HttpServletResponse response, HttpMessageContext httpMessageContext) throws AuthenticationException {
         return SUCCESS;
     }
     
