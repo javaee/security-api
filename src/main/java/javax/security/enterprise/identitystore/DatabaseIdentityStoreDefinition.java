@@ -70,6 +70,9 @@ public @interface DatabaseIdentityStoreDefinition {
     /**
      * SQL query to validate the {caller, password} pair.
      *
+     * Only needed when {@link #useFor()} contains
+     * {@link ValidationType#PROVIDE_GROUPS}.
+     *
      * <p>
      * The name of the caller that is to be authenticated has to be set as the
      * one and only placeholder. The (hashed) password should be in the first
@@ -85,11 +88,14 @@ public @interface DatabaseIdentityStoreDefinition {
      *
      * @return SQL query to validate
      */
-    String callerQuery();
+    String callerQuery() default "";
 
     /**
      * SQL query to retrieve the groups associated with the caller when
      * authentication succeeds.
+     *
+     * Only needed when {@link #useFor()} contains
+     * {@link ValidationType#PROVIDE_GROUPS}.
      *
      * <p>
      * The name of the caller that has been authenticated has to be set as the
@@ -106,7 +112,7 @@ public @interface DatabaseIdentityStoreDefinition {
      *
      * @return SQL query to retrieve the groups
      */
-    String groupsQuery();
+    String groupsQuery() default "";
 
     /**
      * Hash algorithm applied to plain text password for comparison with
