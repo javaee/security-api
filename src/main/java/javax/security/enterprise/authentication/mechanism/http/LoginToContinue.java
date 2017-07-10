@@ -51,8 +51,22 @@ import javax.interceptor.InterceptorBinding;
 import javax.resource.spi.AuthenticationMechanism;
 
 /**
- * The LoginToContinue annotation provides an application the ability to declaratively 
+ * The <code>LoginToContinue</code> annotation provides an application the ability to declaratively 
  * add login to continue functionality to an {@link AuthenticationMechanism}.
+ * 
+ * <p>
+ * When the <code>LoginToContinue</code> annotation is used on a custom authentication mechanism, EL
+ * expressions in attributes of type <code>String</code> are evaluated for every request requiring 
+ * authentication. Both immediate and deferred syntax is supported, but effectively the semantics
+ * are always deferred.
+ * 
+ * <p>
+ * When the <code>LoginToContinue</code> annotation is used as attribute in either the 
+ * {@link FormAuthenticationMechanismDefinition} or {@link CustomFormAuthenticationMechanismDefinition},
+ * expressions using immediate syntax are evaluated only once when the {@link HttpAuthenticationMechanism}
+ * bean is created. Since these beans are application scoped, this means only once per application.
+ * Expressions using deferred syntax are evaluated as described above when the <code>LoginToContinue</code> annotation 
+ * is used on a custom authentication mechanism.
  *
  */
 @Inherited
@@ -78,6 +92,17 @@ public @interface LoginToContinue {
      */
     @Nonbinding
     boolean useForwardToLogin() default true;
+    
+    /**
+     * EL expression variant of <code>useForwardToLogin()</code>.
+     * The expression needs to evaluate to a boolean outcome. All named CDI beans are available 
+     * to the expression. If both this attribute and <code>useForwardToLogin()</code> are specified, this
+     * attribute take precedence.
+     * 
+     * @return an expression evaluating to true if a forward is to be used, false for a redirect
+     */
+    @Nonbinding
+    String useForwardToLoginExpression() default "";
     
     /**
      * The resource (page) a caller should get to see in case an error, such as providing invalid
