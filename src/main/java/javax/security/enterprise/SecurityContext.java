@@ -77,6 +77,10 @@ public interface SecurityContext {
      * <p>
      * This can be used to retrieve application-specific
      * Principals when the platform's representation of the caller uses a different principal type.
+     * <p>
+     * The returned Set is not backed by the Subject's internal Principal Set.
+     * A new Set is created and returned for each method invocation.
+     * Modifications to the returned Set will not affect the internal Principal Set.
      * 
      * @param pType Class object representing the type of Principal to return.
      *
@@ -108,8 +112,7 @@ public interface SecurityContext {
 
 	/**
 	 * Checks whether the caller has access to the provided "web resource" using the GET HTTP method, 
-	 * such as specified by section 13.8 of the Servlet specification, and the JACC specification, 
-	 * specifically the {@link WebResourcePermission} type.
+	 * as specified by section 13.8 of the Servlet specification.
 	 * 
 	 * <p>
 	 * A caller has access if the web resource is either not protected (constrained), or when it is protected by a role
@@ -125,8 +128,7 @@ public interface SecurityContext {
 	
 	/**
      * Checks whether the caller has access to the provided "web resource" using the given methods, 
-     * such as specified by section 13.8 of the Servlet specification, and the JACC specification, 
-     * specifically the {@link WebResourcePermission} type.
+     * as specified by section 13.8 of the Servlet specification.
      * 
      * <p>
      * A caller has access if the web resource is either not protected (constrained), or when it is protected by a role
