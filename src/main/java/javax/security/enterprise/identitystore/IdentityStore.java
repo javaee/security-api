@@ -123,6 +123,13 @@ public class ExampleIdentityStore implements IdentityStore {
     /**
      * Determines the type of validation the IdentityStore should be used for. 
      * By default, its used for credential validation AND providing groups.
+     * <p>
+     * Note that implementers of this API should not return a direct reference
+     * to a Set used internally to represent an IdentityStore's validation types,
+     * unless it is an immutable Set. Callers of the API should be aware that
+     * the returned Set may be immutable, or a copy, and that, in any case,
+     * it should not be modified by the caller.
+     * 
      * @return Type of validation.
      */
     default Set<ValidationType> validationTypes() {
