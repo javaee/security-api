@@ -50,7 +50,6 @@ import java.util.EnumSet;
 import java.util.Set;
 
 import javax.security.auth.message.module.ServerAuthModule;
-import javax.security.enterprise.CallerPrincipal;
 import javax.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
 import javax.security.enterprise.credential.Credential;
 
@@ -97,19 +96,19 @@ public class ExampleIdentityStore implements IdentityStore {
      */
     default CredentialValidationResult validate(Credential credential) {
         try {
-        	return CredentialValidationResult.class.cast(
+        	    return CredentialValidationResult.class.cast(
                     MethodHandles.lookup()
                                  .bind(this, "validate", methodType(CredentialValidationResult.class, credential.getClass()))
                                  .invoke(credential));
         } catch (NoSuchMethodException e) {
-        	return NOT_VALIDATED_RESULT;
+            return NOT_VALIDATED_RESULT;
 		} catch (Throwable e) {
 			throw new IllegalStateException(e);
 		}
     }
     
     default Set<String> getCallerGroups(CredentialValidationResult validationResult) {
-    	return emptySet();
+    	    return emptySet();
     }
 
     /**
