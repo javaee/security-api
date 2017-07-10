@@ -39,10 +39,11 @@
  */
 
 /**
- * The Identity Store Credential API package. This package
- * contains classes and interfaces associated with submitting credentials.
+ * The main Java EE Security API package. This package
+ * contains classes and interfaces that span authentication, 
+ * authorization and identity concerns.
  *
  * @version 1.0
  */
-package javax.security.enterprise.credential;
+package javax.security.enterprise;
 

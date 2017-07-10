@@ -37,12 +37,13 @@
  * only if the new code is made subject to such option by the copyright
  * holder.
  */
-
 /**
- * The Identity Store Credential API package. This package
- * contains classes and interfaces associated with submitting credentials.
+ * The HTTP authentication mechanism API package. This package
+ * contains classes and interfaces associated with authentication
+ * mechanisms that specifically target HTTP as environment to
+ * interact with a caller (challenge/response, obtain credentials).
  *
  * @version 1.0
  */
-package javax.security.enterprise.credential;
+package javax.security.enterprise.authentication.mechanism.http;
 

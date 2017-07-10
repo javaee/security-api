@@ -39,10 +39,12 @@
  */
 
 /**
- * The Identity Store Credential API package. This package
- * contains classes and interfaces associated with submitting credentials.
+ * The identity store API package. This package
+ * contains classes and interfaces associated with the
+ * identity store, which validate a Caller's
+ * credentials and access a Caller's identity attributes.
  *
  * @version 1.0
  */
-package javax.security.enterprise.credential;
+package javax.security.enterprise.identitystore;
 
