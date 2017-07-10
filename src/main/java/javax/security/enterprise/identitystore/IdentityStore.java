@@ -67,7 +67,7 @@ import javax.security.enterprise.credential.Credential;
  */
 public interface IdentityStore {
     
-    public static final Set<ValidationType> DEFAULT_VALIDATION_TYPES = EnumSet.of(VALIDATE, PROVIDE_GROUPS);
+    Set<ValidationType> DEFAULT_VALIDATION_TYPES = EnumSet.of(VALIDATE, PROVIDE_GROUPS);
 
     /**
      * Validates the given credential.

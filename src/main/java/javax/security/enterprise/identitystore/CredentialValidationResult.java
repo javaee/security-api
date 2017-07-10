@@ -83,7 +83,7 @@ public class CredentialValidationResult {
          * Indicates that the credential is valid after a validation attempt.
          */
         VALID
-    };
+    }
 
     /**
      * Constructor for any result other than VALID.
@@ -188,7 +188,7 @@ public class CredentialValidationResult {
         this.callerPrincipal = callerPrincipal;
         this.callerDn = callerDn;
         this.callerUniqueId = callerUniqueId;
-        this.groups = groups != null ? unmodifiableSet(new HashSet<String>(groups)) : emptySet();
+        this.groups = groups != null ? unmodifiableSet(new HashSet<>(groups)) : emptySet();
     }
 
     /**

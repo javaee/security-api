@@ -65,7 +65,7 @@ import javax.servlet.http.HttpServletResponse;
  * details on this.
  * 
  * <p>
- * Implementations of this class can notify the Servlet container about a succesful authentication by using the
+ * Implementations of this class can notify the Servlet container about a successful authentication by using the
  * {@link HttpMessageContext#notifyContainerAboutLogin(java.security.Principal, java.util.Set)} method.
  * 
  * <p>
