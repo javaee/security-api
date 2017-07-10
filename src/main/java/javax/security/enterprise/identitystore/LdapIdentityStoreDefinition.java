@@ -66,7 +66,7 @@ public @interface LdapIdentityStoreDefinition {
     /**
      * Enum representing LDAP search scope values.
      */
-    enum LdapSearchScope { ONE_LEVEL, SUBTREE };
+    enum LdapSearchScope { ONE_LEVEL, SUBTREE }
 
     /**
      * URL where the LDAP server can be reached.
