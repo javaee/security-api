@@ -110,9 +110,9 @@ public interface HttpMessageContext {
     void cleanClientSubject();
 
     /**
-     * Returns the parameters that were provided with the SecurityContect#authenticate(AuthParameters) call.
+     * Returns the parameters that were provided with the SecurityContext#authenticate(AuthParameters) call.
      *  
-     * @return the parameters that were provided with the SecurityContect#authenticate(AuthParameters) call, or a default instance. Never null.
+     * @return the parameters that were provided with the SecurityContext#authenticate(AuthParameters) call, or a default instance. Never null.
      */
     AuthenticationParameters getAuthParameters();
 
