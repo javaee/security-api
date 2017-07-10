@@ -111,22 +111,6 @@ public interface SecurityContext {
 	boolean isCallerInRole(String role);
 
 	/**
-	 * Checks whether the caller has access to the provided "web resource" using the GET HTTP method, 
-	 * as specified by section 13.8 of the Servlet specification.
-	 * 
-	 * <p>
-	 * A caller has access if the web resource is either not protected (constrained), or when it is protected by a role
-	 * and the caller is in that role.
-	 * 
-	 * @param resource the name of the web resource to test access for. This is a <code>URLPatternSpec</code> that 
-	 * identifies the application specific web resources to which the permission pertains. For a full specification of this
-	 * pattern see {@link WebResourcePermission#WebResourcePermission(String, String)}.
-     * 
-	 * @return <code>true</code> if the caller has access to the web resource, <code>false</code> otherwise. 
-	 */
-	boolean hasAccessToWebResource(String resource);
-	
-	/**
      * Checks whether the caller has access to the provided "web resource" using the given methods, 
      * as specified by section 13.8 of the Servlet specification.
      * 
