@@ -279,8 +279,52 @@ public @interface LdapIdentityStoreDefinition {
     String groupMemberOfAttribute() default "memberOf";
 
     /**
+     * Set the timeout value that should be used when waiting for
+     * the LDAP server to return results. Note that this is different
+     * from the connection timeout for the underlying socket connection;
+     * <p>
+     * The default value of 0 means wait forever (assuming the connection
+     * itself does not time out).
+     * 
+     * @return The readTimeout value.
+     */
+    int readTimeout() default 0;
+
+    /**
+     * Allow readTimeout to be specified as an EL expression.
+     * If set, overrides any value set with readTimeout.
+     * 
+     * @return The readTimeout EL expression
+     */
+    String readTimeoutExpression() default "";
+
+    /**
+     * Set the maximum number of results (objects) the server should
+     * return in response to a search.
+     * <p>
+     * The default value is set to 1000, which corresponds to the
+     * maximum number of results most LDAP servers will return for
+     * in a single response. Most LDAP servers support paging through
+     * result sets larger than 1000, but doing so should rarely be
+     * necessary for normal validation and group lookup use cases.
+     * Implementations of the built-in LDAP IdentityStore MAY support
+     * paging through larger result sets, but are NOT REQUIRED to.
+     * 
+     * @return The maximum number of results the LDAP server should return.
+     */
+    int maxResults() default 1000;
+
+    /**
+     * Allow maxResults to be specified as an EL expression.
+     * If set, overrides any value set with maxResults.
+     * 
+     * @return The maxResults EL expression
+     */
+    String maxResultsExpression() default "";
+
+    /**
      * Determines the order in case multiple IdentityStores are found.
-     * @return the priority.
+     * @return The priority.
      */
     int priority() default 80;
 
@@ -288,14 +332,14 @@ public @interface LdapIdentityStoreDefinition {
      * Allow priority to be specified as an EL expression.
      * If set, overrides any value set with priority.
      * 
-     * @return the priority EL expression
+     * @return The priority EL expression
      */
     String priorityExpression() default "";
 
     /**
      * Determines what the identity store is used for
      * 
-     * @return the type the identity store is used for
+     * @return The type the identity store is used for
      */
     ValidationType[] useFor() default {VALIDATE, PROVIDE_GROUPS};
 
@@ -303,7 +347,7 @@ public @interface LdapIdentityStoreDefinition {
      * Allow useFor to be specified as an EL expression.
      * If set, overrides any value set with useFor.
      * 
-     * @return the useFor EL expression
+     * @return The useFor EL expression
      */
     String useForExpression() default "";
 
