@@ -259,6 +259,23 @@ public interface HttpMessageContext {
     /**
      * Asks the container to register the given caller principal and groups in order to make
      * them available to the application for use with {@link SecurityContext#isCallerInRole(String)} etc.
+     * 
+     * <p>
+     * Note that this call may result in the container establishing two caller principals to
+     * represent the caller's identity -- the Principal provided here as the principal parameter,
+     * and a second principal used as the container's representation of the caller identity.
+     * A second principal is added only if the container uses a different Principal type to
+     * represent the caller. If the types are the same, only one Principal is added.
+     * 
+     * <p>
+     * If a second principal is added, the value returned by {@link Principal#getName()}
+     * will be the same for both principals.
+     * 
+     * <p>
+     * When two principals are added, the container's caller principal is returned from
+     * {@link SecurityContext#getCallerPrincipal()}, and the principal supplied here
+     * as a parameter can be retrieved using {@link SecurityContext#getPrincipalsByType(Class)}.
+     * When only one is added, it is returned by {@link SecurityContext#getCallerPrincipal()}.
      *
      * <p>
      * Note that after this call returned, the authenticated identity will not be immediately active. This
