@@ -51,7 +51,7 @@ import javax.interceptor.InterceptorBinding;
 import javax.resource.spi.AuthenticationMechanism;
 
 /**
- * The <code>LoginToContinue</code> annotation provides an application the ability to declarative
+ * The <code>LoginToContinue</code> annotation provides an application the ability to declaratively 
  * add login to continue functionality to an {@link AuthenticationMechanism}.
  * 
  * <p>
