@@ -57,42 +57,73 @@ import static javax.security.enterprise.identitystore.IdentityStore.ValidationTy
  *
  * @author Arjan Tijms
  * @author Rudy De Busscher
+ * @author Will Hopkins
  */
 @Retention(RUNTIME)
 @Target(TYPE)
 public @interface LdapIdentityStoreDefinition {
 
     /**
+     * Enum representing LDAP search scope values.
+     */
+    enum LdapSearchScope { ONE_LEVEL, SUBTREE };
+
+    /**
      * URL where the LDAP server can be reached.
-     * E.g. <code>ldap://localhost:33389"</code>
+     * <p>
+     * E.g.: <code>ldap://localhost:33389</code>
      *
      * @return URL where the LDAP server can be reached
      */
     String url() default "";
+    
+    /**
+     * Distinguished name for the application or administrative user that will be used to
+     * make the initial connection to the LDAP and to perform searches and lookups.
+     * <p>
+     * This value is needed if caller or group lookup will be done. It is not needed if the
+     * store will be used only to authenticate callers using direct binding (see callerBaseDn).
+     * <p>
+     * This user needs search permission in the LDAP for persons and/or groups.
+     * <p>
+     * E.g.: <code>uid=ldap,ou=apps,dc=jsr375,dc=net</code>
+     *
+     * @return The distinguished name for the application user.
+     */
+    String bindDn() default "";
 
     /**
-     * Base of the distinguished name that contains the caller name.
-     * E.g. <code>ou=caller,dc=jsr375,dc=net</code>
-     * When this member value is specified, direct binding is attempted, see also baseDn
+     * Password for the application/admin user defined by the bindDn member.
+     * Only used when the member bindDn is filled in.
      *
-     * @return Base of the distinguished name that contains the caller name
+     * @return password for the application user.
+     */
+    String bindDnPassword() default "";
+    
+    /**
+     * Base distinguished name for callers in the LDAP store
+     * (e.g., "<code>ou=caller,dc=jsr375,dc=net</code>").
+     * <p>
+     * When this member value is specified, and callerSearchBase is not, direct binding is attempted.
+     * <p>
+     * The callerNameAttribute must be specified along with this attribute so that the
+     * runtime can create the "leaf" RDN needed to concatenate with the base DN to create the
+     * full DN of the caller.
+     *
+     * @return The base distinguished name for callers.
      */
     String callerBaseDn() default "";
 
     /**
-     * Name of the attribute that contains the caller name in the node
-     * just below the one identified by {@link #callerBaseDn()}.
-     * E.g. <code>uid</code>
+     * Name of the attribute that contains the callers name in the person object
+     * (e.g., "<code>uid</code>").
      * <p>
-     * Example for the relationship with {@link #callerBaseDn()} and the name
-     * of the caller that needs to be authenticated:
-     * <br>
-     * Given the DN <code>uid=peter,ou=caller,dc=jsr375,dc=net</code>,
-     * <ul>
-     * <li> {@link #callerNameAttribute()} corresponds to <code>uid</code> </li>
-     * <li> {@link #callerBaseDn()} corresponds to <code>ou=caller,dc=jsr375,dc=net</code> </li>
-     * <li> <code>peter</code> is the caller name that needs to be authenticated </li>
-     * </ul>
+     * This attribute will be used, with callerBaseDn, to construct caller DNs for direct binding.
+     * It is also used to retrieve the caller's name when the caller object is instead looked up
+     * using search.
+     * <p>
+     * The value of this attribute is returned as the caller principal name
+     * for a successful credential validation.
      * <p>
      * The following gives an example in ldif format:
      * <pre>
@@ -108,41 +139,97 @@ public @interface LdapIdentityStoreDefinition {
      * </code>
      * </pre>
      *
-     * @return Name of the attribute that contains the caller name
+     * @return Name of the attribute that represents the caller name
      */
     String callerNameAttribute() default "uid";
 
     /**
-     * Base of the distinguished name that contains the groups
-     * E.g. <code>ou=group,dc=jsr375,dc=net</code>
+     * Search base for looking up callers
+     * (e.g., "<code>ou=caller,dc=jsr375,dc=net</code>").
+     * <p>
+     * Overrides callerBaseDn, if configured, causing caller search
+     * to be used instead of direct binding.
+     * Requires that the bindDn member be filled in.
      *
-     * @return Base of the distinguished name that contains the groups
+     * @return Base DN for searching the LDAP tree for callers.
      */
-    String groupBaseDn() default "";
+    String callerSearchBase() default "";
 
     /**
-     * Name of the attribute that contains the group name in the node
-     * just below the one identified by {@link #groupBaseDn()}.
-     * E.g. <code>cn</code>
-     * <p>
-     * Example for the relationship with {@link #groupBaseDn()} and the role name
-     * <br>
-     * Given the DN <code>cn=foo,ou=group,dc=jsr375,dc=net</code>,
-     * <ul>
-     * <li> {@link #groupNameAttribute()} corresponds to <code>cn</code> </li>
-     * <li> {@link #groupBaseDn()} corresponds to <code>ou=group,dc=jsr375,dc=net</code> </li>
-     * <li> <code>foo</code> is the group name that will be returned by the store when authentication succeeds</li>
-     * </ul>
+     * Search filter to find callers when callerSearchBase is set.
+     * The search is performed starting from the callerSearchBase DN
+     * with the scope specified by callerSearchScope.
      *
-     * @return Name of the attribute that contains the group name
+     * @return Search expression to find callers.
+     */
+    String callerSearchFilter() default "";
+
+    /**
+     * Search scope for caller searches: determines depth
+     * of the search in the LDAP tree.
+     * 
+     * @return The search scope
+     */
+    LdapSearchScope callerSearchScope() default LdapSearchScope.SUBTREE;
+
+    /**
+     * Allow callerSearchScope to be specified as an EL expression.
+     * If set, overrides any value set with callerSearchScope.
+     * 
+     * @return the callerSearchScope EL expression
+     */
+    String callerSearchScopeExpression() default "";
+
+    /**
+     * Search base for looking up groups
+     * (e.g., "<code>ou=group,dc=jsr375,dc=net</code>").
+     * <p>
+     * Needed only for a store that performs group lookup.
+     * Requires that the bindDn member be filled in.
+     * 
+     * @return Base DN for searching the LDAP tree for groups.
+     */
+    String groupSearchBase() default "";
+
+    /**
+     * Search filter to find groups when groupSearchBase is set.
+     * The search is performed starting from the groupSearchBase DN
+     * with the scope specified by groupSearchScope.
+     *
+     * @return Search expression to find groups.
+     */
+    String groupSearchFilter() default "";
+    
+    /**
+     * Search scope for group searches, determines depth
+     * of the search in the LDAP tree.
+     * 
+     * @return The search scope
+     */
+    LdapSearchScope groupSearchScope() default LdapSearchScope.SUBTREE;
+
+    /**
+     * Allow groupSearchScope to be specified as an EL expression.
+     * If set, overrides any value set with groupSearchScope.
+     * 
+     * @return the groupSearchScope EL expression
+     */
+    String groupSearchScopeExpression() default "";
+
+    /**
+     * Name of the attribute of a group object that represents the group name
+     * (e.g., "<code>cn</code>")
+     *
+     * @return Name of the attribute that represents the group name
      */
     String groupNameAttribute() default "cn";
 
     /**
-     * DN attribute for the group DN that identifies the callers that are in that group.
-     * E.g. <code>member</code>
+     * Name of the attribute in a group object that identifies the
+     * members of the  group
+     * (e.g., "<code>member</code>").
      * <p>
-     * The value of this attribute has to the full DN of the caller. The following gives an example
+     * The value of this attribute must be the full DN of the caller. The following gives an example
      * entry in ldif format:
      * <pre>
      * <code>
@@ -155,56 +242,113 @@ public @interface LdapIdentityStoreDefinition {
      * </code>
      * </pre>
      *
-     * @return DN attribute for the group DN
+     * @return Attribute for the group members
      */
-    String groupCallerDnAttribute() default "member";
+    String groupMemberAttribute() default "member";
 
     /**
-     * Base of the distinguished name for the application user that will be used to make the initial connection to the LDAP.
-     * This account needs search persons in the LDAP to find the actual DN of the user who we need to authenticate.
-     * When this member is filled in, the value in callerBaseDn is ignored.
+     * Name of the attribute in a person object that identifies the groups
+     * the caller belongs to
+     * (e.g., "<code>memberOf</code>").
      * <p>
-     * E.g. <code>uid=ldap,ou=apps,dc=jsr375,dc=net</code>
+     * This attribute is used only if: a) group search is not configured
+     * (i.e., no groupSearchBase and groupSearchFilter configured); and,
+     * b) the caller's DN is available, either because groups are being returned
+     * during the credential validation phase by an identity store that performs
+     * both validation and group lookup, or because the DN is available in the
+     * {@link CredentialValidationResult} passed to the
+     * {@link IdentityStore#getCallerGroups(CredentialValidationResult)} method.
+     * <p>
+     * The value of this attribute must be the full DN of the group. The following gives an example
+     * entry in ldif format:
+     * <pre>
+     * <code>
+     * dn: uid=peter,ou=caller,dc=jsr375,dc=net
+     * objectclass: top
+     * objectclass: uidObject
+     * objectclass: person
+     * uid: peter
+     * cn: Peter Smith
+     * memberOf: cn=foo,ou=group,dc=jsr375,dc=net
+     * memberOf: cn=bar,ou=group,dc=jsr375,dc=net
+     * </code>
+     * </pre>
      *
-     * @return The distinguished name for the application user.
+     * @return Attribute for group membership
      */
-    String baseDn() default "";
+    String groupMemberOfAttribute() default "memberOf";
 
     /**
-     * Password for the application user defined by the baseDn member.
-     * Only used when the member baseDN is filled in.
-     *
-     * @return password for the application user.
+     * Set the timeout value that should be used when waiting for
+     * the LDAP server to return results. Note that this is different
+     * from the connection timeout for the underlying socket connection;
+     * <p>
+     * The default value of 0 means wait forever (assuming the connection
+     * itself does not time out).
+     * 
+     * @return The readTimeout value.
      */
-    String password() default "";
+    int readTimeout() default 0;
 
     /**
-     * Search base for finding the user.
-     * Only used when the member baseDN is filled in.
-     *
-     * @return base for searching the LDAP tree for the user.
+     * Allow readTimeout to be specified as an EL expression.
+     * If set, overrides any value set with readTimeout.
+     * 
+     * @return The readTimeout EL expression
      */
-    String searchBase() default "";
+    String readTimeoutExpression() default "";
 
     /**
-     * Search expression to find
-     * Only used when the member baseDN is filled in.
-     *
-     * @return Search expression to find the user.
+     * Set the maximum number of results (objects) the server should
+     * return in response to a search.
+     * <p>
+     * The default value is set to 1000, which corresponds to the
+     * maximum number of results most LDAP servers will return for
+     * in a single response. Most LDAP servers support paging through
+     * result sets larger than 1000, but doing so should rarely be
+     * necessary for normal validation and group lookup use cases.
+     * Implementations of the built-in LDAP IdentityStore MAY support
+     * paging through larger result sets, but are NOT REQUIRED to.
+     * 
+     * @return The maximum number of results the LDAP server should return.
      */
-    String searchExpression() default "";
+    int maxResults() default 1000;
+
+    /**
+     * Allow maxResults to be specified as an EL expression.
+     * If set, overrides any value set with maxResults.
+     * 
+     * @return The maxResults EL expression
+     */
+    String maxResultsExpression() default "";
 
     /**
      * Determines the order in case multiple IdentityStores are found.
-     * @return the priority.
+     * @return The priority.
      */
     int priority() default 80;
 
     /**
+     * Allow priority to be specified as an EL expression.
+     * If set, overrides any value set with priority.
+     * 
+     * @return The priority EL expression
+     */
+    String priorityExpression() default "";
+
+    /**
      * Determines what the identity store is used for
      * 
-     * @return the type the identity store is used for
+     * @return The type the identity store is used for
      */
     ValidationType[] useFor() default {VALIDATE, PROVIDE_GROUPS};
+
+    /**
+     * Allow useFor to be specified as an EL expression.
+     * If set, overrides any value set with useFor.
+     * 
+     * @return The useFor EL expression
+     */
+    String useForExpression() default "";
 
 }

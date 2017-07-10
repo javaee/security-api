@@ -39,6 +39,7 @@
  */
 package javax.security.enterprise.authentication.mechanism.http;
 
+import java.security.Principal;
 import java.util.Set;
 
 import javax.security.auth.Subject;
@@ -268,12 +269,12 @@ public interface HttpMessageContext {
      * As a convenience this method returns SUCCESS, so this method can be used in
      * one fluent return statement from an {@link HttpAuthenticationMechanism}
      * 
-     * @param callerPrincipal the CallerPrincipal that will become the caller principal
+     * @param principal the Principal that will become the caller principal
      * @param groups the groups associated with the caller principal
      * @return {@link AuthenticationStatus#SUCCESS}
      *
      */
-    AuthenticationStatus notifyContainerAboutLogin(CallerPrincipal callerPrincipal, Set<String> groups);
+    AuthenticationStatus notifyContainerAboutLogin(Principal principal, Set<String> groups);
     
     /**
      * Convenience method intended to pass the <code>CredentialValidationResult</code> result of an 
@@ -283,7 +284,7 @@ public interface HttpMessageContext {
      * If the outcome from the given {@link CredentialValidationResult#getStatus()} equals
      * {@link Status#VALID}, the {@link CallerPrincipal} and groups are obtained from the
      * <code>CredentialValidationResult</code> and passed into 
-     * {@link HttpMessageContext#notifyContainerAboutLogin(CallerPrincipal, Set)}.
+     * {@link HttpMessageContext#notifyContainerAboutLogin(Principal, Set)}.
      * 
      * <p>
      * If the outcome from the given {@link CredentialValidationResult#getStatus()} is not 
@@ -313,8 +314,18 @@ public interface HttpMessageContext {
      */
     AuthenticationStatus doNothing();
     
-    CallerPrincipal getCallerPrincipal();
+    /**
+     * Gets the Principal set by a call to notifyContainerAboutLogin().
+     * 
+     * @return The caller principal
+     */
+    Principal getCallerPrincipal();
 
+    /**
+     * Gets the groups set by a call to notifyContainerAboutLogin().
+     * 
+     * @return The groups
+     */
     Set<String> getGroups();
 
 }

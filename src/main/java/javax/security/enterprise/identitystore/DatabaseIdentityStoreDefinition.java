@@ -82,7 +82,7 @@ public @interface DatabaseIdentityStoreDefinition {
      * Example query:
      * <pre>
      * <code>
-     * select password from caller where name = ?
+     * select password from callers where name = ?
      * </code>
      * </pre>
      *
@@ -120,14 +120,7 @@ public @interface DatabaseIdentityStoreDefinition {
      *
      * @return Hash algorithm applied to plain text password
      */
-    String hashAlgorithm() default ""; // default no hash (for now) todo: make enum?
-
-    /**
-     * Encoding used for hash. TODO
-     *
-     * @return Encoding used for hash
-     */
-    String hashEncoding() default ""; // default no encoding (for now) todo: make enum?
+    String hashAlgorithm() default "PBKDF2";
 
     /**
      * Determines the order in case multiple IdentityStores are found.
@@ -137,10 +130,26 @@ public @interface DatabaseIdentityStoreDefinition {
     int priority() default 70;
 
     /**
+     * Allow priority to be specified as an EL expression.
+     * If set, overrides any value set with priority.
+     * 
+     * @return the priority EL expression
+     */
+    String priorityExpression() default "";
+
+    /**
      * Determines what the identity store is used for
      *
      * @return the type the identity store is used for
      */
     ValidationType[] useFor() default {VALIDATE, PROVIDE_GROUPS};
+
+    /**
+     * Allow useFor to be specified as an EL expression.
+     * If set, overrides any value set with useFor.
+     * 
+     * @return the useFor EL expression
+     */
+    String useForExpression() default "";
 
 }

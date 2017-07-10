@@ -64,6 +64,7 @@ public class CredentialValidationResult {
 
     private final Status status;
     private final String storeId;
+    private final String callerDn;
     private final String callerUniqueId;
     private final CallerPrincipal callerPrincipal;
     private final Set<String> groups;
@@ -92,7 +93,7 @@ public class CredentialValidationResult {
      * @param status
      */
     private CredentialValidationResult(Status status) {
-        this(status, null, null, null, null);
+        this(status, null, null, null, null, null);
     }
 
     /**
@@ -130,7 +131,7 @@ public class CredentialValidationResult {
      * @param groups Groups associated with the caller from the identity store
      */
     public CredentialValidationResult(CallerPrincipal callerPrincipal, Set<String> groups) {
-        this(null, callerPrincipal, null, groups);
+        this(null, callerPrincipal, null, null, groups);
     }
 
     /**
@@ -138,11 +139,13 @@ public class CredentialValidationResult {
      *
      * @param storeId Identity store unique ID
      * @param callerName Name of the validated caller
+     * @param callerDn Caller's LDAP DN (distinguished name)
      * @param callerUniqueId Caller's unique identifier from the identity store
      * @param groups Groups associated with the caller from the identity store
      */
-    public CredentialValidationResult(String storeId, String callerName, String callerUniqueId, Set<String> groups) {
-        this(storeId, new CallerPrincipal(callerName), callerUniqueId, groups);
+    public CredentialValidationResult(String storeId, String callerName,
+            String callerDn, String callerUniqueId, Set<String> groups) {
+        this(storeId, new CallerPrincipal(callerName), callerDn, callerUniqueId, groups);
     }
 
     /**
@@ -150,11 +153,13 @@ public class CredentialValidationResult {
      *
      * @param storeId Identity store unique ID
      * @param callerPrincipal CallerPrincipal of validated caller
+     * @param callerDn Caller's LDAP DN (distinguished name)
      * @param callerUniqueId Caller's unique identifier from the identity store
      * @param groups Groups associated with the caller from the identity store
      */
-    public CredentialValidationResult(String storeId, CallerPrincipal callerPrincipal, String callerUniqueId, Set<String> groups) {
-        this(VALID, storeId, callerPrincipal, callerUniqueId, groups);
+    public CredentialValidationResult(String storeId, CallerPrincipal callerPrincipal,
+            String callerDn, String callerUniqueId, Set<String> groups) {
+        this(VALID, storeId, callerPrincipal, callerDn, callerUniqueId, groups);
     }
 
     /**
@@ -163,13 +168,15 @@ public class CredentialValidationResult {
      * @param status The result status
      * @param storeId Identity store unique ID
      * @param callerPrincipal CallerPrincipal of validated caller
+     * @param callerDn Caller's LDAP DN (distinguished name)
      * @param callerUniqueId Caller's unique identifier from the identity store
      * @param groups Groups associated with the caller from the identity store
      */
     private CredentialValidationResult(Status status, String storeId,
-            CallerPrincipal callerPrincipal, String callerUniqueId, Set<String> groups) {
+            CallerPrincipal callerPrincipal, String callerDn, String callerUniqueId, Set<String> groups) {
 
-        if (status != VALID && (storeId != null || callerPrincipal != null || callerUniqueId != null || groups != null)) {
+        if (status != VALID && (storeId != null || callerPrincipal != null ||
+                callerDn != null || callerUniqueId != null || groups != null)) {
             throw new IllegalArgumentException("Bad status");
         }
         if (status == VALID && (callerPrincipal == null || callerPrincipal.getName().trim().isEmpty())) {
@@ -179,6 +186,7 @@ public class CredentialValidationResult {
         this.status = status;
         this.storeId = storeId;
         this.callerPrincipal = callerPrincipal;
+        this.callerDn = callerDn;
         this.callerUniqueId = callerUniqueId;
         this.groups = groups != null ? unmodifiableSet(new HashSet<String>(groups)) : emptySet();
     }
@@ -218,6 +226,15 @@ public class CredentialValidationResult {
      */
     public String getCallerUniqueId() {
         return callerUniqueId;
+    }
+
+    /**
+     * Return the CallerPrincipal for the validated credential.
+     * 
+     * @return The CallerPrincipal.
+     */
+    public String getCallerDn() {
+        return callerDn;
     }
 
     /**
