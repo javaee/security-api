@@ -135,7 +135,7 @@ public @interface DatabaseIdentityStoreDefinition {
      * 
      * @return the priority EL expression
      */
-    String priorityExpression();
+    String priorityExpression() default "";
 
     /**
      * Determines what the identity store is used for
@@ -150,6 +150,6 @@ public @interface DatabaseIdentityStoreDefinition {
      * 
      * @return the useFor EL expression
      */
-    String useForExpression();
+    String useForExpression() default "";
 
 }
