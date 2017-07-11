@@ -48,8 +48,8 @@
  * 
  * <h3>...Definition annotations</h3>
  * 
- * The Java EE Security API features several annotations ending on <code>Definition</code> which when used make CDI
- * beans available. For completeness, this concerns the following annotations:
+ * The Java EE Security API features several annotations, with names that end with <code>Definition</code>,
+ * which, when used, make CDI beans available. For completeness, this concerns the following annotations:
  * 
  *  <ul>
  *  <li>{@link javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition}</li>
@@ -59,8 +59,8 @@
  *  <li>{@link javax.security.enterprise.authentication.mechanism.http.FormAuthenticationMechanismDefinition}</li>
  *  </ul>
  *  
- * For all attributes of type <code>String</code> on these annotations expression language 3.0 expressions can be used.  
- * All named CDI beans are available to that expression as well as the default classes as specified by EL 3.0 for the
+ * For all attributes of type <code>String</code> on these annotations, Expression Language 3.0 expressions can be used.
+ * All named CDI beans are available to that expression, as well as the default classes as specified by EL 3.0 for the
  * {@link ELProcessor}.
  * 
  * <p>
@@ -71,9 +71,9 @@
  * 
  * <p>
  * Attributes that are documented as being EL alternatives to non-<code>String</code> type
- * attributes (attributes of which the name ends on <code>Expression</code>, hereafter called EL alternative attribute) 
- * MUST evaluate to the same type as the attribute they are an alternative to. If the EL alternative attribute has a 
- * non empty value, it takes precedence over the attribute which it is an alternative to.  
+ * attributes (attributes for which the name ends with <code>Expression</code>, hereafter called EL alternative attribute)
+ * MUST evaluate to the same type as the attribute they are an alternative to. If the EL alternative attribute has a
+ * non empty value, it takes precedence over the attribute which it is an alternative to.
  * 
  * <p>
  * The EL alternative attribute MUST contain a valid EL expression. Attributes of type string that are not EL alternative
