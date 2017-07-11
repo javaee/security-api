@@ -60,9 +60,8 @@ public @interface BasicAuthenticationMechanismDefinition {
     /**
      * Name of realm that will be sent via the <code>WWW-Authenticate</code> header.
      * <p>
-     * Note that contrary to what happens in some proprietary Servlet products, this
-     * realm name <b>does not</b> couple a named identity store configuration to the 
-     * authentication mechanism.  
+     * Note that this realm name <b>does not</b> couple a named identity store
+     * configuration to the authentication mechanism.
      * 
      * @return Name of realm
      */

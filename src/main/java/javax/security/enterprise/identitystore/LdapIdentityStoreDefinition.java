@@ -76,7 +76,7 @@ public @interface LdapIdentityStoreDefinition {
      * @return URL where the LDAP server can be reached
      */
     String url() default "";
-    
+
     /**
      * Distinguished name for the application or administrative user that will be used to
      * make the initial connection to the LDAP and to perform searches and lookups.
@@ -99,7 +99,7 @@ public @interface LdapIdentityStoreDefinition {
      * @return password for the application user.
      */
     String bindDnPassword() default "";
-    
+
     /**
      * Base distinguished name for callers in the LDAP store
      * (e.g., "<code>ou=caller,dc=jsr375,dc=net</code>").
@@ -199,7 +199,7 @@ public @interface LdapIdentityStoreDefinition {
      * @return Search expression to find groups.
      */
     String groupSearchFilter() default "";
-    
+
     /**
      * Search scope for group searches, determines depth
      * of the search in the LDAP tree.
