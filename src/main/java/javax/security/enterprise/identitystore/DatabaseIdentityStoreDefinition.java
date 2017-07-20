@@ -120,7 +120,25 @@ public @interface DatabaseIdentityStoreDefinition {
      *
      * @return Hash algorithm applied to plain text password
      */
-    String hashAlgorithm() default "PBKDF2";
+    // String hashAlgorithm() default "PBKDF2";
+    
+    Class<? extends HashAlgorithm> hashAlgorithm() default Pbkdf2HashAlgorithm.class;
+    
+    /**
+     * Used to specify algorithm specific parameters, such as:
+     * <p>
+     * <ul>
+     * <li>PBKDF2.iterations
+     * <li>PBKDF2.salt
+     * </ul>
+     * 
+     * <p>
+     *  Parameters are specified using the format:
+     *  <i>parameterName=parameterValue</i> with one parameter per array element.
+     * 
+     */
+    String[] hashAlgorithmParameters() default {};
+    
 
     /**
      * Determines the order in case multiple IdentityStores are found.
