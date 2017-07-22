@@ -1,7 +1,7 @@
 /*
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS HEADER.
  *
- * Copyright (c) 2017 Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2015, 2017 Oracle and/or its affiliates. All rights reserved.
  *
  * The contents of this file are subject to the terms of either the GNU
  * General Public License Version 2 only ("GPL") or the Common Development
@@ -41,8 +41,34 @@ package javax.security.enterprise.identitystore;
 
 import java.util.Map;
 
-public interface HashAlgorithm {
+public interface PasswordHash {
 
-    boolean verifyHash(char[] password, String hashedPassword, Map<String, String> parameters);
-    
+    /**
+     * Generate an encoded password hash value for storage in a user's account.
+     * <p>
+     * This method should not be used to generate a password hash for verification purposes;
+     * use {@link #verifyHash(char[], String)} for that purpose. Use this method only to generate
+     * hash values when processing a new or changed password.
+     * <p>
+     * The returned hash value should be fully encoded such that it can be directly stored, as is,
+     * with no additional format or encoding changes.
+     * 
+     * @param password The password to generate a hash for.
+     * @return The generated password hash value.
+     */
+    String generateHash(char[] password);
+
+    /**
+     * Verify a user's password against the corresponding password hash value.
+     * <p>
+     * The password hash value should be provided exactly as retrieved from the identity store,
+     * with no decoding or formatting applied. The provided password value will be hashed and
+     * compared to the decoded hashed password value.
+     * 
+     * @param password The password to verify.
+     * @param hashedPassword The hashed password value to compare against.
+     * @return True if the password matched the hashed password, false otherwise.
+     */
+    boolean verifyHash(char[] password, String hashedPassword);
+
 }

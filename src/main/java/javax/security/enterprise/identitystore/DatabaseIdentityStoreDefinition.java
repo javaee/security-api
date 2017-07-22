@@ -120,9 +120,8 @@ public @interface DatabaseIdentityStoreDefinition {
      *
      * @return Hash algorithm applied to plain text password
      */
-    // String hashAlgorithm() default "PBKDF2";
     
-    Class<? extends HashAlgorithm> hashAlgorithm() default Pbkdf2HashAlgorithm.class;
+    Class<? extends PasswordHash> hashAlgorithm() default Pbkdf2PasswordHash.class;
     
     /**
      * Used to specify algorithm specific parameters, such as:
