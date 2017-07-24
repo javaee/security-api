@@ -116,7 +116,7 @@ public @interface DatabaseIdentityStoreDefinition {
 
     /**
      * Hash algorithm applied to plain text password for comparison with
-     * password returned from {@link #groupsQuery()}.
+     * password returned from {@link #callerQuery()}.
      *
      * @return Hash algorithm applied to plain text password
      */

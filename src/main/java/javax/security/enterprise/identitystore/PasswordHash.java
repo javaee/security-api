@@ -44,10 +44,29 @@ import java.util.Map;
 public interface PasswordHash {
 
     /**
+     * Initialize the instance with the parameters it should use to
+     * generate and verify password hashes. The parameters are the
+     * name/value pairs specified with the
+     * {@link DatabaseIdentityStoreDefinition#hashAlgorithmParameters()}
+     * attribute.
+     * <p>
+     * An implementation is not required to support parameters, and may
+     * ignore parameters passed to it. It is also possible that an implementation
+     * will use the specified parameters when generating a new password hash,
+     * but ignore them in favor of parameters stored with an existing password
+     * hash when verifying.
+     * <p>
+     * If not parameters were provided, the argument is an empty {@link Map}.
+     *
+     * @param parameters A {@link Map} of the provided parameters, empty if no parameters were supplied.
+     */
+    void initialize(Map<String, String> parameters);
+
+    /**
      * Generate an encoded password hash value for storage in a user's account.
      * <p>
      * This method should not be used to generate a password hash for verification purposes;
-     * use {@link #verifyHash(char[], String)} for that purpose. Use this method only to generate
+     * use {@link #verify(char[], String)} for that purpose. Use this method only to generate
      * hash values when processing a new or changed password.
      * <p>
      * The returned hash value should be fully encoded such that it can be directly stored, as is,
@@ -56,7 +75,7 @@ public interface PasswordHash {
      * @param password The password to generate a hash for.
      * @return The generated password hash value.
      */
-    String generateHash(char[] password);
+    String generate(char[] password);
 
     /**
      * Verify a user's password against the corresponding password hash value.
@@ -69,6 +88,6 @@ public interface PasswordHash {
      * @param hashedPassword The hashed password value to compare against.
      * @return True if the password matched the hashed password, false otherwise.
      */
-    boolean verifyHash(char[] password, String hashedPassword);
+    boolean verify(char[] password, String hashedPassword);
 
 }
