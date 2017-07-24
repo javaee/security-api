@@ -50,7 +50,6 @@ import javax.el.ELProcessor;
 import javax.enterprise.util.Nonbinding;
 import javax.interceptor.InterceptorBinding;
 import javax.resource.spi.AuthenticationMechanism;
-import javax.security.enterprise.authentication.mechanism.http.HttpMessageContext;
 import javax.security.enterprise.identitystore.IdentityStore;
 import javax.security.enterprise.identitystore.RememberMeIdentityStore;
 import javax.servlet.http.Cookie;
@@ -193,6 +192,14 @@ public @interface RememberMe {
      */
     @Nonbinding
     String cookieName() default "JREMEMBERMEID";
+    
+    /**
+     * Flag to determine if remember me should be used.
+     * 
+     * @return Flag to determine if remember me should be used
+     */
+    @Nonbinding
+    boolean isRememberMe() default true;
     
     /**
      * EL expression to determine if remember me should be used. This is evaluated
