@@ -43,6 +43,7 @@ import static java.lang.annotation.ElementType.TYPE;
 import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
+import java.util.stream.Stream;
 import javax.security.enterprise.identitystore.IdentityStore.ValidationType;
 import static javax.security.enterprise.identitystore.IdentityStore.ValidationType.PROVIDE_GROUPS;
 import static javax.security.enterprise.identitystore.IdentityStore.ValidationType.VALIDATE;
@@ -134,7 +135,13 @@ public @interface DatabaseIdentityStoreDefinition {
      * <p>
      *  Parameters are specified using the format:
      *  <i>parameterName=parameterValue</i> with one parameter per array element.
-     * 
+     *  
+     *  <p>
+     *  This attribute supports immediate EL expressions (${} syntax) for both the
+     *  <code>parameterValue</code> as well as for a full array element. If an EL
+     *  expression is used for a full array element, the expression must evaluate
+     *  to either a single string, a string array or a string {@link Stream} where
+     *  in each case every string must adhere to the above specified format. 
      */
     String[] hashAlgorithmParameters() default {};
     
