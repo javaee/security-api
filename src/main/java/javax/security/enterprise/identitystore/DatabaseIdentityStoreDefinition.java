@@ -134,7 +134,13 @@ public @interface DatabaseIdentityStoreDefinition {
      * <p>
      *  Parameters are specified using the format:
      *  <i>parameterName=parameterValue</i> with one parameter per array element.
-     * 
+     *  
+     *  <p>
+     *  This attribute supports immediate EL expressions (${} syntax) for both the
+     *  <code>parameterValue</code> as well as for a full array element. If an EL
+     *  expression is used for a full array element, the expression must evaluate
+     *  to either a single string, a string array or a string <code>Stream</code>
+     *  where in each case every string must adhere to the above specified format. 
      */
     String[] hashAlgorithmParameters() default {};
     
