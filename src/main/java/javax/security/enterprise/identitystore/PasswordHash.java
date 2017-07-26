@@ -60,7 +60,8 @@ public interface PasswordHash {
      *
      * @param parameters A {@link Map} of the provided parameters, empty if no parameters were supplied.
      */
-    void initialize(Map<String, String> parameters);
+    default void initialize(Map<String, String> parameters) {
+    }
 
     /**
      * Generate an encoded password hash value for storage in a user's account.
