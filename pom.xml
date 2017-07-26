@@ -46,9 +46,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:https://github.com/javaee-security-spec/security-api.git</connection>
-        <developerConnection>scm:git:https://github.com/javaee-security-spec/security-api.git</developerConnection>
-        <url>https://github.com/javaee-security-spec/security-api</url>
+        <connection>scm:git:https://github.com/javaee/security-api.git</connection>
+        <developerConnection>scm:git:https://github.com/javaee/security-api.git</developerConnection>
+        <url>https://github.com/javaee/security-api</url>
         <tag>HEAD</tag>
     </scm>
 
@@ -249,7 +249,7 @@
                     <checkoutDirectory>${project.build.directory}/javadoc-scm</checkoutDirectory>
                     <checkinComment>Publishing Javadoc for ${project.artifactId}:${project.version}</checkinComment>
                     <content>${project.reporting.outputDirectory}/apidocs</content>
-                    <pubScmUrl>scm:git:git@github.com:javaee-security-spec/security-api.git</pubScmUrl>
+                    <pubScmUrl>scm:git:git@github.com:javaee/security-api.git</pubScmUrl>
                     <scmBranch>gh-pages</scmBranch>
                 </configuration>
             </plugin>
