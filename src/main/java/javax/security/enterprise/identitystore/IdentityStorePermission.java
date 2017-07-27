@@ -45,8 +45,9 @@ import java.security.BasicPermission;
  * Class for IdentityStore permissions.
  * <p>
  * Currently defined permission names are:
- * <p>
- * getGroups
+ * <ul>
+ * <li>getGroups
+ * </ul>
  * <p>
  * No actions are defined.
  *
