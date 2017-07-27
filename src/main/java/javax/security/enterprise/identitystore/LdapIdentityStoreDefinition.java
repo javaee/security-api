@@ -54,10 +54,6 @@ import static javax.security.enterprise.identitystore.IdentityStore.ValidationTy
  * Annotation used to define a container provided {@link IdentityStore} that stores
  * caller credentials and identity attributes (together caller identities) in an
  * LDAP store, and make that implementation available as an enabled CDI bean.
- *
- * @author Arjan Tijms
- * @author Rudy De Busscher
- * @author Will Hopkins
  */
 @Retention(RUNTIME)
 @Target(TYPE)

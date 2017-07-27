@@ -52,9 +52,6 @@ import static javax.security.enterprise.identitystore.IdentityStore.ValidationTy
  * Annotation used to define a container provided {@link IdentityStore} that
  * stores caller credentials and identity attributes in a relational database,
  * and make that implementation available as an enabled CDI bean.
- *
- * @author Arjan Tijms
- *
  */
 @Retention(RUNTIME)
 @Target(TYPE)
@@ -116,31 +113,38 @@ public @interface DatabaseIdentityStoreDefinition {
     String groupsQuery() default "";
 
     /**
-     * Hash algorithm applied to plain text password for comparison with
-     * password returned from {@link #callerQuery()}.
+     * A {@link PasswordHash} implementation used to verify plaintext passwords
+     * by generating a hash of the password and comparing it against the hashed
+     * value returned from the database via the {@link #callerQuery()}.
      *
-     * @return Hash algorithm applied to plain text password
+     * @return The password hash used to verify plaintext passwords.
      */
     
     Class<? extends PasswordHash> hashAlgorithm() default Pbkdf2PasswordHash.class;
     
     /**
-     * Used to specify algorithm specific parameters, such as:
+     * Used to specify algorithm-specific parameters.
      * <p>
-     * <ul>
-     * <li>PBKDF2.iterations
-     * <li>PBKDF2.salt
-     * </ul>
+     * Parameters are specified as a list of name/value pairs, using the format below:
+     * <blockquote><pre>
+<i>parameterName=parameterValue</i>
+     * </pre></blockquote>
+     * <p>
+     * For example:
+     * <blockquote><pre>
+     * <i>Algorithm.param1="value"</i>
+     * <i>Algorithm.param2=32</i>
+     * </pre></blockquote>
+     * <p>
+     * This attribute supports immediate EL expressions (${} syntax) for both the
+     * <code>parameterValue</code> as well as for a full array element. If an EL
+     * expression is used for a full array element, the expression must evaluate
+     * to either a single string, a string array or a string {@link Stream} where
+     * in each case every string must adhere to the above specified format.
      * 
-     *  <p>
-     *  This attribute supports immediate EL expressions (${} syntax) for both the
-     *  <code>parameterValue</code> as well as for a full array element. If an EL
-     *  expression is used for a full array element, the expression must evaluate
-     *  to either a single string, a string array or a string {@link Stream} where
-     *  in each case every string must adhere to the above specified format. 
+     * @return The algorithm parameters.
      */
     String[] hashAlgorithmParameters() default {};
-    
 
     /**
      * Determines the order in case multiple IdentityStores are found.

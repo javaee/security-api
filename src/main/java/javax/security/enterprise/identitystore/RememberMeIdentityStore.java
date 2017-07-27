@@ -64,10 +64,8 @@ public interface RememberMeIdentityStore {
     /**
      * Validates the given credential.
      *
-     * @param credential
-     *            The credential
-     * @return The validation result, including associated caller roles and
-     *         groups.
+     * @param credential The credential to validate.
+     * @return The validation result, including associated caller groups.
      */
     CredentialValidationResult validate(RememberMeCredential credential);
     
@@ -78,9 +76,9 @@ public interface RememberMeIdentityStore {
      * {@link RememberMeCredential} and passed into the {@link #validate(RememberMeCredential)}
      * method.
      * 
-     * @param callerPrincipal the principal to be associated
-     * @param groups the groups the principal is in
-     * @return a token that can be used to get the principal and groups back at a later moment.
+     * @param callerPrincipal The principal to be associated.
+     * @param groups The groups the principal is in.
+     * @return A token that can be used to get the principal and groups back at a later time.
      */
     String generateLoginToken(CallerPrincipal callerPrincipal, Set<String> groups);
     
@@ -91,7 +89,7 @@ public interface RememberMeIdentityStore {
      * If the token did not exist (i.e. no principal and groups were associated with that token)
      * no exception will be thrown.
      * 
-     * @param token the token that is to be removed
+     * @param token The token that is to be removed.
      */
     void removeLoginToken(String token);
     

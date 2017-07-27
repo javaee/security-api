@@ -39,6 +39,14 @@
  */
 package javax.security.enterprise.identitystore;
 
+/**
+ * Interface representing the built-in {@code PlaintextPasswordHash} implementation.
+ * <p>
+ * In order to use this implementation with the built-in database {@link IdentityStore},
+ * this interface should be specified as the {@link DatabaseIdentityStoreDefinition#hashAlgorithm()}.
+ * <p>
+ * Note that the {@code PlaintextPasswordHash} is not recommended for use in production environments.
+ */
 public interface PlaintextPasswordHash extends PasswordHash {
 
 }

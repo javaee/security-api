@@ -39,28 +39,46 @@
  */
 package javax.security.enterprise.identitystore;
 
-import javax.resource.spi.AuthenticationMechanism;
 import javax.security.auth.message.module.ServerAuthModule;
+import javax.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
 import javax.security.enterprise.credential.Credential;
 
 /**
- * <code>IdentityStoreHandler</code> is a mechanism for validating a Caller's
- * credentials and accessing a Caller's identity attributes using multiple IdentityStores,
- * and would be used by an authentication mechanism,
- * such as the JSR 375 {@link AuthenticationMechanism}
- * or the JSR 196 (JASPIC) {@link ServerAuthModule}.
+ * <code>IdentityStoreHandler</code> is a mechanism for validating a caller's
+ * credentials, and accessing a caller's identity attributes, by consulting
+ * a set of one or more {@link IdentityStore}s.
  * <p>
- * Other beans should only inject this handler and not the IdentityStore directly as multiple stores can exists.
- *
+ * It is intended for use by an authentication mechanism, such as an
+ * {@link HttpAuthenticationMechanism} (JSR 375) or a {@link ServerAuthModule}
+ * (JSR 196/JASPIC).
+ * <p>
+ * Beans should inject only this handler, and not {@link IdentityStore}
+ * directly, as multiple stores may exist.
+ * <p>
+ * Implementations of JSR 375 must supply a default implementation of {@code IdentityStoreHandler}
+ * that behaves as described in the JSR 375 specification document.
+ * Applications do not need to supply an {@code IdentityStoreHandler}
+ * unless application-specific behavior is desired.
  */
 public interface IdentityStoreHandler {
 
     /**
-     * Validates the given credential.
+     * Validate the given {@link Credential} and return the identity and attributes
+     * of the caller it represents.
+     * <p>
+     * Implementations of this method will typically invoke the {@code validate()}
+     * and {@code getCallerGroups()} methods of one or more {@link IdentityStore}s
+     * and return an aggregated result.
+     * <p>
+     * Note that the {@link IdentityStore} may check for {@link IdentityStorePermission}
+     * if {@code getCallerGroups()} is called and a {@link SecurityManager} is configured.
+     * (The default built-in stores do perform this check; application-supplied stores
+     * may or may not.) An implementation of this method should therefore invoke
+     * {@code getCallerGroups()} in the context of a {@link java.security.PrivilegedAction},
+     * and arrange to be granted the appropriate {@link IdentityStorePermission} permission.
      *
-     * @param credential The credential
-     * @return The validation result, including associated caller roles and
-     * (optionally) groups.
+     * @param credential The credential to validate.
+     * @return The validation result.
      */
     CredentialValidationResult validate(Credential credential);
 }
