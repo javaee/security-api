@@ -61,7 +61,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * <p>
  * A <code>HttpAuthenticationMechanism</code> is essentially a Servlet specific and CDI enabled version of
- * the {@link ServerAuthModule} that adheres to the Server Container Profile. See the JASPIC spec for further
+ * the {@link ServerAuthModule} that adheres to the Servlet Container Profile. See the JASPIC spec for further
  * details on this.
  * 
  * <p>
