@@ -44,14 +44,18 @@ import java.lang.annotation.Retention;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Target;
 import java.util.stream.Stream;
+import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.IdentityStore.ValidationType;
 import static javax.security.enterprise.identitystore.IdentityStore.ValidationType.PROVIDE_GROUPS;
 import static javax.security.enterprise.identitystore.IdentityStore.ValidationType.VALIDATE;
 
 /**
- * Annotation used to define a container provided {@link IdentityStore} that
+ * Annotation used to define a container-provided {@link IdentityStore} that
  * stores caller credentials and identity attributes in a relational database,
  * and make that implementation available as an enabled CDI bean.
+ * <p>
+ * The container-provided {@code IdentityStore} must support validating {@link UsernamePasswordCredential},
+ * and may support validating other credential types.
  */
 @Retention(RUNTIME)
 @Target(TYPE)
