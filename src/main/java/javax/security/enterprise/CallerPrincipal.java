@@ -46,10 +46,6 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Principal that represents the caller principal associated with the invocation being 
  * processed by the container (e.g. the current HTTP request).
- * <p>
- * When JSR 375 authentication is used this type, or a sub-type thereof, is what should be 
- * returned by other Java EE platform APIs, such as {@link HttpServletRequest#getUserPrincipal()}
- *
  */
 public class CallerPrincipal implements Principal {
     
@@ -62,7 +58,7 @@ public class CallerPrincipal implements Principal {
     /**
      * The name of the caller
      * 
-     * @return name of the caller
+     * @return The name of the caller
      */
     @Override
     public String getName() {

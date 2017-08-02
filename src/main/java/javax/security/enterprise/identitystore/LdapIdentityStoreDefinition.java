@@ -47,13 +47,17 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import javax.security.enterprise.credential.UsernamePasswordCredential;
 import static javax.security.enterprise.identitystore.IdentityStore.ValidationType.PROVIDE_GROUPS;
 import static javax.security.enterprise.identitystore.IdentityStore.ValidationType.VALIDATE;
 
 /**
- * Annotation used to define a container provided {@link IdentityStore} that stores
+ * Annotation used to define a container-provided {@link IdentityStore} that stores
  * caller credentials and identity attributes (together caller identities) in an
  * LDAP store, and make that implementation available as an enabled CDI bean.
+ * <p>
+ * The container-provided {@code IdentityStore} must support validating {@link UsernamePasswordCredential},
+ * and may support validating other credential types.
  */
 @Retention(RUNTIME)
 @Target(TYPE)

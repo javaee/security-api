@@ -149,7 +149,7 @@ public interface SecurityContext {
 	 * @param parameters The parameters that are provided along with a programmatic authentication request, for instance the credentials.
 	 * collected by the application for continuing an authentication dialog.
 	 * 
-	 * @return the state of the authentication mechanism after being triggered by this call
+	 * @return The state of the authentication mechanism after being triggered by this call
 	 */
     AuthenticationStatus authenticate(HttpServletRequest request, HttpServletResponse response, AuthenticationParameters parameters);
 
