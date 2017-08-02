@@ -10,7 +10,7 @@
 
     <groupId>javax.security.enterprise</groupId>
     <artifactId>javax.security.enterprise-api</artifactId>
-    <version>1.0</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <name>Java EE Security API</name>
