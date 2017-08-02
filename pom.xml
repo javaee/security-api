@@ -40,7 +40,7 @@
             <name>
                 Dual license consisting of the CDDL v1.1 and GPL v2
             </name>
-            <url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</url>
+            <url>https://javaee.github.io/glassfish/LICENSE</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
