@@ -6,7 +6,7 @@ This project provides the API code for JSR-375, the Java EE Security API.
 # Information about JSR-375
 
 This site is published only to provide access to javadoc.
-Please see the [Java EE Security Specification](https://javaee.github.com/security-spec/) page
+Please see the [Java EE Security Specification](https://javaee.github.io/security-spec/) page
 for information about JSR-375 and the Java EE Security API.
 
 # Javadoc
