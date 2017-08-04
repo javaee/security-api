@@ -1,7 +1,7 @@
 theme: jekyll-theme-architect
 
-title: [security-api]
-description: [Java EE Security API (JSR 375)]
+title: [Java EE Security API (JSR-375)]
+description: [Repository for JSR-375 API Code]
 
 # sidebar links url
 links:

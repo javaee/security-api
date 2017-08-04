@@ -1,12 +1,10 @@
 # About
 
-Welcome to the security-api project.
+Welcome to the Java EE Security API project. This project provides the API code for JSR-375, the Java EE Security API.
 
-# Javadocs
+Click [here](apidocs/index.html) for the most latest (1.0 pre-release) javadocs.
 
-You can find javadocs for the Java EE Security API [here](apidocs/index.html)
-
-
+For more information about JSR-375, please see the main JSR-375 page at https://javaee.github.com/security-spec/.
 
 # IMPORTANT!
 
