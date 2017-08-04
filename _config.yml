@@ -5,7 +5,7 @@ description: [Java EE Security API specification (JSR 375)]
 
 # sidebar links url
 links:
-  source: https://github.com/javaee/security-spec
+  source: https://github.com/javaee/security-api
   #download:
   #mailinglist:
   #javadocs:
