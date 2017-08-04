@@ -10,7 +10,7 @@
 
     <groupId>javax.security.enterprise</groupId>
     <artifactId>javax.security.enterprise-api</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0-b11-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <name>Java EE Security API</name>
@@ -20,11 +20,11 @@
     <properties>
         <api_package>javax.security.enterprise</api_package>
 
-        <non_final>false</non_final>
-        <spec_version>1.1</spec_version>
+        <non_final>true</non_final>
+        <spec_version>0.0</spec_version>
         <spec_impl_version>${project.version}</spec_impl_version>
-        <new_spec_version>1.1</new_spec_version>
-        <spec_build>01</spec_build>
+        <new_spec_version>1.0</new_spec_version>
+        <spec_build>11</spec_build>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
