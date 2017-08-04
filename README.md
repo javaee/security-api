@@ -1,1 +1,10 @@
-# Java EE Security API
+# About
+
+Welcome to the security-api project.
+
+
+
+# IMPORTANT!
+
+* By contributing to this project, you are agreeing to the terms of use described in [CONTRIBUTING.md](./CONTRIBUTING.md)
+
