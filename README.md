@@ -2,6 +2,10 @@
 
 Welcome to the security-api project.
 
+# Javadocs
+
+You can find javadocs for the Java EE Security API [here](apidocs/index.html)
+
 
 
 # IMPORTANT!
