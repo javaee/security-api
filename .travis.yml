@@ -4,8 +4,10 @@ jdk:
 
 script: mvn clean package
 
-deploy:
-   provider: script
-   script: mvn deploy -Dmaven.test.skip -s settings.xml
-   on:
-      branch: master
+# no longer deploying via travis
+
+#deploy:
+#   provider: script
+#   script: mvn deploy -Dmaven.test.skip -s settings.xml
+#   on:
+#      branch: master
