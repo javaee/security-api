@@ -45,7 +45,6 @@ import java.util.Set;
 import javax.ejb.SessionContext;
 import javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
 import javax.security.enterprise.authentication.mechanism.http.HttpAuthenticationMechanism;
-import javax.security.jacc.WebResourcePermission;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -119,7 +118,7 @@ public interface SecurityContext {
      * 
      * @param resource the name of the web resource to test access for. This is a <code>URLPatternSpec</code> that 
      * identifies the application specific web resources to which the permission pertains. For a full specification of this
-     * pattern see {@link WebResourcePermission#WebResourcePermission(String, String)}.
+     * pattern see {@link javax.security.jacc.WebResourcePermission#WebResourcePermission(String, String)}.
      * @param methods one or more methods to check for whether the caller has access to the web resource using one of those methods.
      * 
      * @return <code>true</code> if the caller has access to the web resource using one of the given methods, <code>false</code> otherwise. 

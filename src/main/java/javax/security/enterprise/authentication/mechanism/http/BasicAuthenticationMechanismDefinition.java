@@ -45,10 +45,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import javax.resource.spi.AuthenticationMechanism;
 
 /**
- * Annotation used to define a container {@link AuthenticationMechanism} that implements
+ * Annotation used to define a container {@link javax.resource.spi.AuthenticationMechanism} that implements
  * the HTTP basic access authentication protocol as defined by the Servlet spec (13.6.1)  
  * and make that implementation available as an enabled CDI bean.
  *

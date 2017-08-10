@@ -74,7 +74,6 @@ Java Cryptography Architecture Standard Algorithm Name Documentation</a>.
 {@code <algorithm>:<iterations>:<base64(salt)>:<base64(hash)>}
  * </pre></blockquote>
  * Where:
- * <p>
  * <ul>
  * <li><i>algorithm</i> -- the algorithm used to generate the hash
  * <li><i>iterations</i> -- the number of iterations used to generate the hash
