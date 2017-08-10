@@ -49,14 +49,13 @@ import java.lang.annotation.Target;
 import javax.el.ELProcessor;
 import javax.enterprise.util.Nonbinding;
 import javax.interceptor.InterceptorBinding;
-import javax.resource.spi.AuthenticationMechanism;
 import javax.security.enterprise.identitystore.IdentityStore;
 import javax.security.enterprise.identitystore.RememberMeIdentityStore;
 import javax.servlet.http.Cookie;
 
 /**
  * The RememberMe annotation provides an application the ability to declarative designate 
- * that an {@link AuthenticationMechanism} effectively "remembers" the authentication and auto
+ * that an {@link javax.resource.spi.AuthenticationMechanism} effectively "remembers" the authentication and auto
  * applies this with every request.
  * 
  * <p>
