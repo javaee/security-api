@@ -6,7 +6,7 @@ Java EE Security (JSR 375) API
 
 This code represents the JSR-375 API.
 
-[Online JavaDoc](https://javaee-security-spec.github.io/security-api/).
+[Online JavaDoc](https://javaee.github.io/security-api/apidocs/index.html).
 
 Building
 --------
