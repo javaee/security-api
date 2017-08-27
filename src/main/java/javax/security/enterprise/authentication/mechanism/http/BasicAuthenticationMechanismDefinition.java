@@ -48,7 +48,7 @@ import java.lang.annotation.Target;
 
 
 /**
- * Annotation used to define a container {@link javax.resource.spi.AuthenticationMechanism} that implements
+ * Annotation used to define a container authentication mechanism that implements
  * the HTTP basic access authentication protocol as defined by the Servlet spec (13.6.1)  
  * and make that implementation available as an enabled CDI bean.
  *
