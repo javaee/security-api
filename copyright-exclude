@@ -1,0 +1,4 @@
+copyright-exclude
+LICENSE.txt
+README.md
+src/main/javadoc/doc-files/speclicense.html
