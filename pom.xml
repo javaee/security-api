@@ -62,11 +62,13 @@
     <properties>
         <api_package>javax.security.enterprise</api_package>
 
-        <non_final>true</non_final>
-        <spec_version>0.0</spec_version>
+        <non_final>false</non_final>
+        <spec_version>1.0</spec_version>
         <spec_impl_version>${project.version}</spec_impl_version>
-        <new_spec_version>1.0</new_spec_version>
-        <spec_build>13</spec_build>
+        <new_spec_version>1.1</new_spec_version>
+        <spec_build>01</spec_build>
+
+        <packages.export>javax.security.enterprise.*</packages.export>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -74,7 +76,6 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <packages.export>javax.security.enterprise.*</packages.export>
         <copyright-plugin.version>1.44</copyright-plugin.version>
     </properties>
 
