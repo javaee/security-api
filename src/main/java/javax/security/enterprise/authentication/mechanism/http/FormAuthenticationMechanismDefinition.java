@@ -49,8 +49,8 @@ import java.lang.annotation.Target;
 import javax.enterprise.util.Nonbinding;
 
 /**
- * Annotation used to define a container {@link javax.resource.spi.AuthenticationMechanism} that implements the
- * FORM authentication mechanism as defined by the Servlet spec (13.6.3) and make that 
+ * Annotation used to define a container authentication mechanism that implements
+ * FORM authentication as defined by the Servlet spec (13.6.3) and make that
  * implementation available as an enabled CDI bean.
  *
  */

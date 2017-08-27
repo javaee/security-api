@@ -50,8 +50,8 @@ import java.lang.annotation.Target;
 import javax.interceptor.InterceptorBinding;
 
 /**
- * The AutoApplySession annotation provides an application the ability to declarative designate 
- * that an {@link javax.resource.spi.AuthenticationMechanism} uses the <code>javax.servlet.http.registerSession</code>
+ * The AutoApplySession annotation provides an application the ability to declaratively designate
+ * that an authentication mechanism uses the <code>javax.servlet.http.registerSession</code>
  * and auto applies this for every request.
  * 
  * <p>

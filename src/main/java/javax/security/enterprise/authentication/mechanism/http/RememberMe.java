@@ -55,8 +55,8 @@ import javax.security.enterprise.identitystore.RememberMeIdentityStore;
 import javax.servlet.http.Cookie;
 
 /**
- * The RememberMe annotation provides an application the ability to declarative designate 
- * that an {@link javax.resource.spi.AuthenticationMechanism} effectively "remembers" the authentication and auto
+ * The RememberMe annotation provides an application the ability to declaratively designate
+ * that an authentication mechanism effectively "remembers" the authentication and auto
  * applies this with every request.
  * 
  * <p>

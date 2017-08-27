@@ -50,14 +50,13 @@ import javax.enterprise.util.Nonbinding;
 import javax.security.enterprise.SecurityContext;
 
 /**
- * Annotation used to define a container {@link javax.resource.spi.AuthenticationMechanism} that implements
- * authentication mechanism resembling the Servlet FORM one (Servlet spec 13.6.3).
+ * Annotation used to define a container authentication mechanism that implements
+ * authentication resembling Servlet FORM authentication (Servlet spec 13.6.3).
  * <p> 
  * Instead of posting back to a predefined action to continue the authentication dialog 
  * (Servlet spec 13.6.3 step 3), this variant depends on the application calling 
  * {@link SecurityContext#authenticate(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, javax.security.enterprise.authentication.mechanism.http.AuthenticationParameters)}
  * 
- *
  */
 @Retention(RUNTIME)
 @Target(TYPE)
